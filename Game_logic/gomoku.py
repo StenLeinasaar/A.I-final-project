@@ -9,11 +9,11 @@ pygame.init()
 PLTYP1 = 'human'
 PLTYP2 = 'human'
 
-# play_music = True
-# play_sound = True
+play_music = True
+play_sound = True
 
-T_MAX = 60
-T_MIN = 0.1
+# T_MAX = 60
+# T_MIN = 0.1
 
 white = (255,255,255)
 black = (0,0,0)
@@ -25,7 +25,7 @@ bg = (32,32,32,255)
 PLAYER1 = 1
 PLAYER2 = 2
 
-fp = './sources/' # 'c:/Users/Ligong/Desktop/five_chess/sources'
+fp = './sources/'
 
 img_board = pygame.image.load(fp+'pics/board.png')
 img_cp1 = pygame.image.load(fp+'pics/cp_k_29.png')
@@ -34,7 +34,7 @@ img_panel = pygame.image.load(fp+'pics/panel.png')
 img_icon = pygame.image.load(fp+'pics/catsmall.png')
 pygame.display.set_icon(img_icon)
 
-fps = 30
+fps = 10
 
 dispWidth = 900
 dispHeight = 645
@@ -67,23 +67,23 @@ plyrInfo1 = {'score': 0, 'time': 0}
 plyrInfo2 = {'score': 0, 'time': 0}
 
 def hex2rgb(pxValue):
-    v = pxValue/256
-    b = pxValue-v*256
+    print("I made it do the hex to rgb method")
+    print(f"pixel value is {pxValue}")
+    v = pxValue//256
+    print(f'value of v is {v}')
+    b = (pxValue-v)*256
+    print(f'value for b is {b}')
     pxValue = v
-    v = pxValue/256
-    g = pxValue-v*256
+    print(f'new pxValues is {pxValue}')
+    v = pxValue//256
+    g = (pxValue-v)*256
     pxValue = v
-    v = pxValue/256
-    r = pxValue-v*256
+    v = pxValue//256
+    r = (pxValue-v)*256
+    print(f'Before returning—value for r: {r}, g: {g}, b: {b}')
     return r, g, b
 
-def darkenBackground():
-    # pygame.draw.rect(setDisplay,bg,(0,0,dispWidth,dispHeight))
-    pixels = pygame.PixelArray(setDisplay)
-    for x in range(dispWidth):
-        for y in range(dispHeight):
-            r, g, b = hex2rgb(pixels[x][y])
-            pixels[x][y] = pygame.Color(r/4,g/4,b/4)
+
             
 def updateInfo(info1,info2,plyr):
 
@@ -139,7 +139,7 @@ def makeTextObjs(text, font, tcolor):
 
 def msgSurface(plyr, textColor):
 
-    darkenBackground()
+    # darkenBackground()
     
     smallText = pygame.font.SysFont('Calibri', 30)
     largeText = pygame.font.SysFont('Calibri', 65)
@@ -153,27 +153,26 @@ def msgSurface(plyr, textColor):
     titleTextRect.center = (int(dispWidth/2), int(dispHeight/2))
     setDisplay.blit(titleTextSurf, titleTextRect)
 
-    typTextSurf, typTextRect = makeTextObjs('Press any key to continue...', smallText, white)
+    typTextSurf, typTextRect = makeTextObjs('Press any key to play again....', smallText, white)
     typTextRect.center = (int(dispWidth/2), int(dispHeight/2)+120)
     setDisplay.blit(typTextSurf, typTextRect)
     pygame.display.update()
-    fpsTime.tick()
+
 
     while whatNext() == None:
         for event in pygame.event.get([QUIT]):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-
         pygame.display.update()
-        fpsTime.tick()
-
     runGame()
 
 def runGame():
 
     theWinner = 0
     currPlayer = PLAYER1
+
+    
 
     setDisplay.blit(img_board, (0,0))
     updateInfo(plyrInfo1, plyrInfo2, currPlayer)
@@ -184,79 +183,43 @@ def runGame():
     for dummy_iy in range(N):
         chessMat.append([0 for dummy_idx in range(N)])
 
-    # ##### AI
-    # srchr1 = skywindAI.searcher()
-    # srchr1.board = chessMat
-    # srchr2 = skywindAI.searcher()
-    # srchr2.board = chessMat
-    # #####
 
     while True: # main game loop
+        # While there is no winner.
         while theWinner == 0:
-            for event in pygame.event.get(): # event handling loop
+            # Event handling loop.
+            for event in pygame.event.get(): 
+                # When they quit.
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
 
             # players play in turn
-            t_start = pygame.time.get_ticks()
             if currPlayer == PLAYER1 and PLTYP1 == 'human':
                 row, col = getPiecePos()
                 while not isValid((row, col), chessMat):
                     row, col = getPiecePos()
-
-            elif currPlayer == PLAYER1 and PLTYP1 == 'computer':
-                score, row, col = srchr1.search(1, 2)
-                if not isValid((row, col), chessMat):
-                    row, col = sysIndexGen(chessMat, currPlayer)
                     
             elif currPlayer == PLAYER2 and PLTYP2 == 'human':
                 row, col = getPiecePos()
                 while not isValid((row, col),chessMat):
                     row, col = getPiecePos()
                     
-            elif currPlayer == PLAYER2 and PLTYP2 == 'computer':
-                score, row, col = srchr2.search(2, 2)
-                if not isValid((row, col), chessMat):
-                    row, col = sysIndexGen(chessMat, currPlayer)
-                    
-            t_end = pygame.time.get_ticks()
-                
             # add new piece
             chessMat[row][col] = currPlayer
             theWinner = checkIfWins(chessMat, currPlayer)
             drawPiece((row, col), currPlayer)
-
-            # if play_sound:
-            #     cpSound.play()
-
-            t_call = t_end - t_start
-            t_rem = T_MIN*1000 - t_call
-
-            if t_rem > 0:
-                pygame.time.wait(int(t_rem))
-            elif t_call > T_MAX*1000:
-                print('Maximum time exceeded!')
-                if currPlayer == PLAYER1:
-                    theWinner = PLAYER2
-                else:
-                    theWinner = PLAYER1
  
+            # Change the player
             if currPlayer == PLAYER1:
-                plyrInfo1['time'] += t_call/1000.0
                 currPlayer = PLAYER2
             else:
-                plyrInfo2['time'] += t_call/1000.0
                 currPlayer = PLAYER1
 
+
+            # update the board and update the display.
             updateInfo(plyrInfo1, plyrInfo2, currPlayer)
-
-##            print 'data1', data1 ##
-##            print 'data2', data2 ##
-##            print '' ##
-
             pygame.display.update()
-            fpsTime.tick(fps)
 
         print('Winner: Player', theWinner)
         printMat(chessMat)
@@ -313,6 +276,7 @@ def sysIndexGen(mat, player):
             if mat[row][col] == 0:
                 return row, col
 
+# Main Logic to check for winner.
 def checkIfWins(mat, player):
     flag = 'x'
     # rows:
@@ -394,26 +358,23 @@ def checkIfWins(mat, player):
     return 0
 
 while True:
-    global fpsTime
     global cpSound
     global setDisplay
 
     point1 = 0
     point2 = 0
     
-    fpsTime = pygame.time.Clock()
-
     setDisplay = pygame.display.set_mode((dispWidth,dispHeight))
-    pygame.display.set_caption('Five Chess')
+    pygame.display.set_caption('Gomoku')
 
-    # if play_music:
-    #     pygame.mixer.pre_init(44100)
-    #     bgSound = pygame.mixer.Sound(fp+'music/BackgroundMusic.ogg')
-    #     bgSound.set_volume(3)
-    #     bgSound.play(-1)
-    # if play_sound:
-    #     pygame.mixer.pre_init(44100)
-    #     cpSound = pygame.mixer.Sound(fp+'music/Snd_click.ogg')
-    #     cpSound.set_volume(12)
+    if play_music:
+        pygame.mixer.pre_init(44100)
+        bgSound = pygame.mixer.Sound(fp+'music/BackgroundMusic.ogg')
+        bgSound.set_volume(3)
+        bgSound.play(-1)
+    if play_sound:
+        pygame.mixer.pre_init(44100)
+        cpSound = pygame.mixer.Sound(fp+'music/Snd_click.ogg')
+        cpSound.set_volume(12)
 
     runGame()
