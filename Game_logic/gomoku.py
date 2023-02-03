@@ -9,8 +9,8 @@ pygame.init()
 PLTYP1 = 'human'
 PLTYP2 = 'human'
 
-play_music = True
-play_sound = True
+# play_music = True
+# play_sound = True
 
 # T_MAX = 60
 # T_MIN = 0.1
@@ -25,105 +25,87 @@ bg = (32,32,32,255)
 PLAYER1 = 1
 PLAYER2 = 2
 
-fp = './sources/'
+img_board = pygame.image.load('./sources/pics/board.png')
+img_black_stone = pygame.image.load('./sources/pics/stone_black.png')
+image_white_stone = pygame.image.load('./sources/pics/stone_white.png')
+# img_panel = pygame.image.load(fp+'pics/panel.png')
 
-img_board = pygame.image.load(fp+'pics/board.png')
-img_cp1 = pygame.image.load(fp+'pics/cp_k_29.png')
-img_cp2 = pygame.image.load(fp+'pics/cp_w_29.png')
-img_panel = pygame.image.load(fp+'pics/panel.png')
-img_icon = pygame.image.load(fp+'pics/catsmall.png')
-pygame.display.set_icon(img_icon)
+fps = 5
 
-fps = 10
+display_width = 900
+display_height = 645
 
-dispWidth = 900
-dispHeight = 645
+line_width = 1
+line_width2 = 4
+line_width3 = 4
+box_width = 40
 
-lineWidth = 1
-lineWidth2 = 4
-lineWidth3 = 4
-boxWidth = 40
-
-marginWidth = 24
+margin_width = 24
 
 N = 15
-n_win = 5 ##
+number_to_win = 5 ##
 
-boardWidth = lineWidth*N+boxWidth*(N-1)
+board_width = line_width*N+box_width*(N-1)
 
-starty = (dispHeight-boardWidth)/2
+starty = (display_height-board_width)/2
 startx = starty+0
 
-infox = 2*marginWidth+boardWidth+48
-infoy1 = startx+marginWidth+(lineWidth+boxWidth)*1
-infoy2 = infoy1+(lineWidth+boxWidth)*4
-infoWidth = (lineWidth+boxWidth)*4
-infoHeight = (lineWidth+boxWidth)*3
-bgWidth = (dispWidth-infox)-1
+info_x_position = 2*margin_width+board_width+48
+info_y_position1= startx+margin_width+(line_width+box_width)*1
+info_y_position2 = info_y_position1+(line_width+box_width)*4
+info_width = (line_width+box_width)*4
+info_height = (line_width+box_width)*3
+background_width = (display_width-info_x_position)-1
 
-cpSize = 29
+stone_size= 29
 
-plyrInfo1 = {'score': 0, 'time': 0}
-plyrInfo2 = {'score': 0, 'time': 0}
-
-def hex2rgb(pxValue):
-    print("I made it do the hex to rgb method")
-    print(f"pixel value is {pxValue}")
-    v = pxValue//256
-    print(f'value of v is {v}')
-    b = (pxValue-v)*256
-    print(f'value for b is {b}')
-    pxValue = v
-    print(f'new pxValues is {pxValue}')
-    v = pxValue//256
-    g = (pxValue-v)*256
-    pxValue = v
-    v = pxValue//256
-    r = (pxValue-v)*256
-    print(f'Before returning—value for r: {r}, g: {g}, b: {b}')
-    return r, g, b
-
+player_info1 = {'score': 0}
+player_info2 = {'score': 0}
 
             
-def updateInfo(info1,info2,plyr):
+def update_info(info1,info2,player):
 
-    setDisplay.blit(img_panel, (infox,0))
-    if plyr == PLAYER1:
-        pygame.draw.rect(setDisplay, lightgreen, (infox+2,infoy1+2,infoWidth-1,infoHeight-1), lineWidth3)
+    # Handle drawing whose turn it is
+    if player == PLAYER1:
+        pygame.draw.rect(set_display, lightgreen, (info_x_position+2,info_y_position1+2,info_width-1,info_height-1), line_width3)
+        pygame.draw.rect(set_display, black, (info_x_position+2,info_y_position2+2,info_width-1,info_height-1), line_width3)
     else:
-        pygame.draw.rect(setDisplay, lightgreen, (infox+2,infoy2+2,infoWidth-1,infoHeight-1), lineWidth3)
+        pygame.draw.rect(set_display, lightgreen, (info_x_position+2,info_y_position2+2,info_width-1,info_height-1), line_width3)
+        pygame.draw.rect(set_display, black, (info_x_position+2,info_y_position1+2,info_width-1,info_height-1), line_width3)
 
-    ttlText = pygame.font.SysFont('Calibri', 24)
-    scoreText = pygame.font.SysFont('Calibri', 20)
-    timeText = pygame.font.SysFont('Calibri', 20)
+    title_text_font = pygame.font.SysFont('Calibri', 24)
+    score_text_font = pygame.font.SysFont('Calibri', 20)
+    time_text_font = pygame.font.SysFont('Calibri', 20)
     
-    textttl = 'Player 1'
-    textsc = 'Score: %d' %info1['score']
-    texttm = 'Time: %.2f s' %info1['time']
-    textSurf, textRect = makeTextObjs(textttl, scoreText, red)
-    textRect.center = (int(infox+infoWidth/2), int(infoy1+infoHeight/2)-30)
-    setDisplay.blit(textSurf, textRect)
-    textSurf, textRect = makeTextObjs(textsc, scoreText, green)
-    textRect.center = (int(infox+infoWidth/2), int(infoy1+infoHeight/2))
-    setDisplay.blit(textSurf, textRect)
-    textSurf, textRect = makeTextObjs(texttm, scoreText, white)
-    textRect.center = (int(infox+infoWidth/2), int(infoy1+infoHeight/2)+26)
-    setDisplay.blit(textSurf, textRect)
+    ##### Set the player 1 Information ###########
+    title = 'Player 1'
+    text_score = 'Score: %d' %info1['score']
 
-    textttl = 'Player 2'
-    textsc = 'Score: %d' %info2['score']
-    texttm = 'Time: %.2f s' %info2['time']
-    textSurf, textRect = makeTextObjs(textttl, scoreText, red)
-    textRect.center = (int(infox+infoWidth/2), int(infoy2+infoHeight/2)-30)
-    setDisplay.blit(textSurf, textRect)
-    textSurf, textRect = makeTextObjs(textsc, scoreText, green)
-    textRect.center = (int(infox+infoWidth/2), int(infoy2+infoHeight/2))
-    setDisplay.blit(textSurf, textRect)
-    textSurf, textRect = makeTextObjs(texttm, scoreText, white)
-    textRect.center = (int(infox+infoWidth/2), int(infoy2+infoHeight/2)+26)
-    setDisplay.blit(textSurf, textRect)
+    text_surface, textRect = make_text_objects(title, title_text_font, red)
+    textRect.center = (int(info_x_position+info_width/2), int(info_y_position1+info_height/2)-30)
+    set_display.blit(text_surface, textRect)
 
-def whatNext():
+    text_surface, textRect = make_text_objects(text_score, score_text_font, green)
+    textRect.center = (int(info_x_position+info_width/2), int(info_y_position1+info_height/2))
+    set_display.blit(text_surface, textRect)
+
+
+    #####  Set player 2 information  ########
+
+    title = 'Player 2'
+    text_score = 'Score: %d' %info2['score']
+
+    text_surface, textRect = make_text_objects(title, title_text_font, red)
+    textRect.center = (int(info_x_position+info_width/2), int(info_y_position2+info_height/2)-30)
+    set_display.blit(text_surface, textRect)
+
+    text_surface, textRect = make_text_objects(text_score, score_text_font, green)
+    textRect.center = (int(info_x_position+info_width/2), int(info_y_position2+info_height/2))
+    set_display.blit(text_surface, textRect)
+    
+
+
+def check_next():
     for event in pygame.event.get([KEYDOWN, KEYUP, QUIT]):
         if event.type == QUIT:
             pygame.quit()
@@ -133,33 +115,33 @@ def whatNext():
         return event.key
     return None
 
-def makeTextObjs(text, font, tcolor):
-    textSurface = font.render(text, True, tcolor)
-    return textSurface, textSurface.get_rect()
+def make_text_objects(text, font, tcolor):
+    text_surface = font.render(text, True, tcolor)
+    return text_surface, text_surface.get_rect()
 
-def msgSurface(plyr, textColor):
+def message_surface(player, text_color):
 
     # darkenBackground()
     
-    smallText = pygame.font.SysFont('Calibri', 30)
-    largeText = pygame.font.SysFont('Calibri', 65)
+    small_text = pygame.font.SysFont('Calibri', 30)
+    large_text = pygame.font.SysFont('Calibri', 65)
 
-    if plyr == PLAYER1:
+    if player == PLAYER1:
         text = 'Player 1 (black) Wins!'
     else:
         text = 'Player 2 (white) Wins!'
 
-    titleTextSurf, titleTextRect = makeTextObjs(text, largeText, textColor)
-    titleTextRect.center = (int(dispWidth/2), int(dispHeight/2))
-    setDisplay.blit(titleTextSurf, titleTextRect)
+    title_text_surface, title_text_rectangle = make_text_objects(text, large_text, text_color)
+    title_text_rectangle.center = (int(display_width/2), int(display_height/2))
+    set_display.blit(title_text_surface, title_text_rectangle)
 
-    typTextSurf, typTextRect = makeTextObjs('Press any key to play again....', smallText, white)
-    typTextRect.center = (int(dispWidth/2), int(dispHeight/2)+120)
-    setDisplay.blit(typTextSurf, typTextRect)
+    typTextSurf, typTextRect = make_text_objects('Press any key to play again....', small_text, white)
+    typTextRect.center = (int(display_width/2), int(display_height/2)+120)
+    set_display.blit(typTextSurf, typTextRect)
     pygame.display.update()
 
 
-    while whatNext() == None:
+    while check_next() == None:
         for event in pygame.event.get([QUIT]):
             if event.type == QUIT:
                 pygame.quit()
@@ -170,81 +152,78 @@ def msgSurface(plyr, textColor):
 def runGame():
 
     theWinner = 0
-    currPlayer = PLAYER1
+    current_player = PLAYER1
 
     
 
-    setDisplay.blit(img_board, (0,0))
-    updateInfo(plyrInfo1, plyrInfo2, currPlayer)
+    set_display.blit(img_board, (0,0))
+    update_info(player_info1, player_info2, current_player)
     
     pygame.display.update()
 
-    chessMat = []
-    for dummy_iy in range(N):
-        chessMat.append([0 for dummy_idx in range(N)])
+    gomoku_board = []
+    for column in range(N):
+        gomoku_board.append([0 for row in range(N)])
 
-
-    while True: # main game loop
-        # While there is no winner.
+    # Main loop
+    while True: 
         while theWinner == 0:
-            # Event handling loop.
             for event in pygame.event.get(): 
-                # When they quit.
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
 
             # players play in turn
-            if currPlayer == PLAYER1 and PLTYP1 == 'human':
-                row, col = getPiecePos()
-                while not isValid((row, col), chessMat):
-                    row, col = getPiecePos()
+            if current_player == PLAYER1 and PLTYP1 == 'human':
+                row, col = get_piece_position()
+                while not isValid((row, col), gomoku_board):
+                    row, col = get_piece_position()
                     
-            elif currPlayer == PLAYER2 and PLTYP2 == 'human':
-                row, col = getPiecePos()
-                while not isValid((row, col),chessMat):
-                    row, col = getPiecePos()
+            elif current_player == PLAYER2 and PLTYP2 == 'human':
+                row, col = get_piece_position()
+                while not isValid((row, col),gomoku_board):
+                    row, col = get_piece_position()
                     
             # add new piece
-            chessMat[row][col] = currPlayer
-            theWinner = checkIfWins(chessMat, currPlayer)
-            drawPiece((row, col), currPlayer)
+            gomoku_board[row][col] = current_player
+            theWinner = check_winner(gomoku_board, current_player)
+            draw_piece((row, col), current_player)
  
             # Change the player
-            if currPlayer == PLAYER1:
-                currPlayer = PLAYER2
+            if current_player == PLAYER1:
+                current_player = PLAYER2
             else:
-                currPlayer = PLAYER1
+                current_player = PLAYER1
 
 
             # update the board and update the display.
-            updateInfo(plyrInfo1, plyrInfo2, currPlayer)
+            update_info(player_info1, player_info2, current_player)
             pygame.display.update()
 
         print('Winner: Player', theWinner)
-        printMat(chessMat)
+        print_board(gomoku_board)
         if theWinner == PLAYER1:
-            plyrInfo1['score'] += 1
+            player_info1['score'] += 1
         else:
-            plyrInfo2['score'] += 1
+            player_info2['score'] += 1
         
-        msgSurface(theWinner, green)
+        message_surface(theWinner, green)
 
-def printMat(mat):
+def print_board(mat):
     for bdraw in mat:
         print(bdraw)
     print('=' * 45)
 
-def drawPiece(indice, player):
-    x = startx+lineWidth/2+indice[1]*(lineWidth+boxWidth)-(cpSize-1)/2
-    y = starty+lineWidth/2+indice[0]*(lineWidth+boxWidth)-(cpSize-1)/2
+def draw_piece(indice, player):
+    x = startx+line_width/2+indice[1]*(line_width+box_width)-(stone_size-1)/2
+    y = starty+line_width/2+indice[0]*(line_width+box_width)-(stone_size-1)/2
 
     if player == PLAYER1:
-        setDisplay.blit(img_cp1, (x,y))
+        set_display.blit(img_black_stone, (x,y))
     else:
-        setDisplay.blit(img_cp2, (x,y))
+        set_display.blit(image_white_stone, (x,y))
 
-def getPiecePos():
+def get_piece_position():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -253,128 +232,123 @@ def getPiecePos():
             elif event.type == MOUSEBUTTONUP:
                 x, y = pygame.mouse.get_pos()
 
-                row = int(round((y-starty-lineWidth/2.0)/(lineWidth+boxWidth)))
-                col = int(round((x-startx-lineWidth/2.0)/(lineWidth+boxWidth)))
+                row = int(round((y-starty-line_width/2.0)/(line_width+box_width)))
+                col = int(round((x-startx-line_width/2.0)/(line_width+box_width)))
                 
                 return row, col
 
-def isValid(indice, mat):
+def isValid(indice, game_board):
     
-    newRow = indice[0]
-    newCol = indice[1]
+    new_row = indice[0]
+    new_col = indice[1]
 
-    if newRow < 0 or newRow > N-1:
+    if new_row < 0 or new_row > N-1:
         return False
-    elif newCol < 0 or newCol > N-1:
+    elif new_col < 0 or new_col > N-1:
         return False
 
-    return mat[newRow][newCol] == 0
+    return game_board[new_row][new_col] == 0
 
-def sysIndexGen(mat, player):
-    for row in range(N):
-        for col in range(N):
-            if mat[row][col] == 0:
-                return row, col
 
 # Main Logic to check for winner.
-def checkIfWins(mat, player):
+def check_winner(game_board, player):
     flag = 'x'
     # rows:
     for row in range(N):
         s_row = ''
         for col in range(N):
-            if mat[row][col] == player:
+            if game_board[row][col] == player:
                 s_row += flag
             else:
                 s_row += '0'
-        isMatch = re.search(flag*n_win,s_row)
-        if isMatch != None:
+        is_match = re.search(flag*number_to_win,s_row)
+        if is_match != None:
             return player
         
     # cols:
     for col in range(N):
         s_col = ''
         for row in range(N):
-            if mat[row][col] == player:
+            if game_board[row][col] == player:
                 s_col += flag
             else:
                 s_col += '0'
-        isMatch = re.search(flag*n_win,s_col)
-        if isMatch != None:
+        is_match = re.search(flag*number_to_win,s_col)
+        if is_match != None:
             return player
 
-    # (0,0) --> (1,1):
-    for k in range(n_win-1,N,1):
+    # Diagonal --> (0,0) --> (1,1):
+    for k in range(number_to_win-1,N,1):
         s_line = ''
         xs = range(0,k+1)
         for x in xs:
             y = k - x
-            if mat[y][N-1-x] == player:
+            if game_board[y][N-1-x] == player:
                 s_line += flag
             else:
                 s_line += '0'
-        isMatch = re.search(flag*n_win,s_line)
-        if isMatch is not None:
+        is_match = re.search(flag*number_to_win,s_line)
+        if is_match is not None:
             return player
-    for k in range(N,2*(N-1)-(n_win-1)+1,1):
+    for k in range(N,2*(N-1)-(number_to_win-1)+1,1):
         s_line = ''
         xs = range(k-(N-1),N)
         for x in xs:
             y = k - x
-            if mat[y][N-1-x] == player:
+            if game_board[y][N-1-x] == player:
                 s_line += flag
             else:
                 s_line += '0'
-        isMatch = re.search(flag*n_win,s_line)
-        if isMatch != None:
+        is_match = re.search(flag*number_to_win,s_line)
+        if is_match != None:
             return player
 
     # (1,0) --> (0,1):
-    for k in range(n_win-1,N,1):
+    for k in range(number_to_win-1,N,1):
         s_line = ''
         xs = range(0,k+1)
         for x in xs:
             y = k - x
-            if mat[y][x] == player:
+            if game_board[y][x] == player:
                 s_line += flag
             else:
                 s_line += '0'
-        isMatch = re.search(flag*n_win,s_line)
-        if isMatch is not None:
+        is_match = re.search(flag*number_to_win,s_line)
+        if is_match is not None:
             return player
-    for k in range(N,2*(N-1)-(n_win-1)+1,1):
+    for k in range(N,2*(N-1)-(number_to_win-1)+1,1):
         s_line = ''
         xs = range(k-(N-1),N)
         for x in xs:
             y = k - x
-            if mat[y][x] == player:
+            if game_board[y][x] == player:
                 s_line += flag
             else:
                 s_line += '0'
-        isMatch = re.search(flag*n_win,s_line)
-        if isMatch != None:
+        is_match = re.search(flag*number_to_win,s_line)
+        if is_match != None:
             return player
         
     return 0
 
 while True:
-    global cpSound
-    global setDisplay
+    # global cpSound
+    global set_display
 
     point1 = 0
     point2 = 0
     
-    setDisplay = pygame.display.set_mode((dispWidth,dispHeight))
+    set_display = pygame.display.set_mode((display_width,display_height))
     pygame.display.set_caption('Gomoku')
 
-    if play_music:
-        pygame.mixer.pre_init(44100)
-        bgSound = pygame.mixer.Sound(fp+'music/BackgroundMusic.ogg')
-        bgSound.set_volume(3)
-        bgSound.play(-1)
-    if play_sound:
-        pygame.mixer.pre_init(44100)
-        cpSound = pygame.mixer.Sound(fp+'music/Snd_click.ogg')
-        cpSound.set_volume(12)
+    # if play_music:
+    #     pygame.mixer.pre_init(44100)
+    #     bgSound = pygame.mixer.Sound(fp+'music/BackgroundMusic.ogg')
+    #     bgSound.set_volume(3)
+    #     bgSound.play(-1)
+    # if play_sound:
+    #     pygame.mixer.pre_init(44100)
+    #     cpSound = pygame.mixer.Sound(fp+'music/Snd_click.ogg')
+    #     cpSound.set_volume(12)
 
     runGame()
