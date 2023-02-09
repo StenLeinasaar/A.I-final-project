@@ -9,8 +9,8 @@ pygame.init()
 PLTYP1 = 'human'
 PLTYP2 = 'human'
 
-# play_music = True
-# play_sound = True
+play_music = True
+play_sound = True
 
 # T_MAX = 60
 # T_MIN = 0.1
@@ -332,7 +332,7 @@ def check_winner(game_board, player):
     return 0
 
 while True:
-    # global cpSound
+    global cpSound
     global set_display
 
     point1 = 0
@@ -341,14 +341,14 @@ while True:
     set_display = pygame.display.set_mode((display_width,display_height))
     pygame.display.set_caption('Gomoku')
 
-    # if play_music:
-    #     pygame.mixer.pre_init(44100)
-    #     bgSound = pygame.mixer.Sound(fp+'music/BackgroundMusic.ogg')
-    #     bgSound.set_volume(3)
-    #     bgSound.play(-1)
-    # if play_sound:
-    #     pygame.mixer.pre_init(44100)
-    #     cpSound = pygame.mixer.Sound(fp+'music/Snd_click.ogg')
-    #     cpSound.set_volume(12)
+    if play_music:
+        pygame.mixer.pre_init(44100)
+        bgSound = pygame.mixer.Sound('./sources/music/BackgroundMusic.ogg')
+        bgSound.set_volume(3)
+        bgSound.play(-1)
+    if play_sound:
+        pygame.mixer.pre_init(44100)
+        cpSound = pygame.mixer.Sound('./sources/music/Snd_click.ogg')
+        cpSound.set_volume(12)
 
     runGame()
