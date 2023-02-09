@@ -9,9 +9,11 @@ def max_val(node: Node, depth: int, alpha: int, beta: int) -> int:
         value = alpha_beta_pruning(child, depth-1, alpha, beta, False)
         best_value = max(best_value, value)
         alpha = max(alpha, best_value)
+        
         if beta <= alpha:
             break
     return best_value
+
 
 
 
