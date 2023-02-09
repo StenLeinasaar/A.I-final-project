@@ -6,7 +6,7 @@ def max_val(node: Node, depth: int, alpha: int, beta: int) -> int:
         return evaluate(node)
     best_value = -float("inf")
     for child in node.children:
-        value = alpha_beta_pruning(child, depth-1, alpha, beta, False)
+        value = max_val(child, depth-1, alpha, beta, False)
         best_value = max(best_value, value)
         alpha = max(alpha, best_value)
         
@@ -23,7 +23,7 @@ def min_val(node: Node, depth: int, alpha: int, beta: int) -> int:
 
     best_value = float("inf")
     for child in node.children:
-        value = alpha_beta_pruning(child, depth-1, alpha, beta, True)
+        value = min_val(child, depth-1, alpha, beta, True)
         best_value = min(best_value, value)
         beta = min(beta, best_value)
         if beta <= alpha:
