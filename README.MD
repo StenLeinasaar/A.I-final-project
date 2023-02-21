@@ -9,7 +9,11 @@ Needed implementation to fulfill the project:
     - Reinforcement model player that I will also train
 
 
-GUI of a game was not neccesary, but I decided to create it anyways using PyGame library.
+GUI of a game was not neccesary, but I decided to create it anyways using PyGame library. There is no types forced in gomoku.py code; however, I am enforcing types in A.I player classes to make sure that I am not making type mistakes. 
+
+To run the code simply start virtualenvironment: virtualenv venv  --> and then --> source venv/bin/activate
+Download the dependcies and required packages:  pip3 install -r requirements.txt
+Then start the code: python3 gomoku.py 
 
 ### Utility folder 
 

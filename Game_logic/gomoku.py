@@ -9,12 +9,6 @@ pygame.init()
 PLTYP1 = 'human'
 PLTYP2 = 'human'
 
-play_music = True
-play_sound = True
-
-# T_MAX = 60
-# T_MIN = 0.1
-
 white = (255,255,255)
 black = (0,0,0)
 red = (175,0,0)
@@ -28,7 +22,7 @@ PLAYER2 = 2
 img_board = pygame.image.load('./sources/pics/board.png')
 img_black_stone = pygame.image.load('./sources/pics/stone_black.png')
 image_white_stone = pygame.image.load('./sources/pics/stone_white.png')
-# img_panel = pygame.image.load(fp+'pics/panel.png')
+
 
 fps = 5
 
@@ -75,7 +69,6 @@ def update_info(info1,info2,player):
 
     title_text_font = pygame.font.SysFont('Calibri', 24)
     score_text_font = pygame.font.SysFont('Calibri', 20)
-    time_text_font = pygame.font.SysFont('Calibri', 20)
     
     ##### Set the player 1 Information ###########
     title = 'Player 1'
@@ -176,12 +169,12 @@ def runGame():
             # players play in turn
             if current_player == PLAYER1 and PLTYP1 == 'human':
                 row, col = get_piece_position()
-                while not isValid((row, col), gomoku_board):
+                while not is_valid((row, col), gomoku_board):
                     row, col = get_piece_position()
                     
             elif current_player == PLAYER2 and PLTYP2 == 'human':
                 row, col = get_piece_position()
-                while not isValid((row, col),gomoku_board):
+                while not is_valid((row, col),gomoku_board):
                     row, col = get_piece_position()
                     
             # add new piece
@@ -237,7 +230,7 @@ def get_piece_position():
                 
                 return row, col
 
-def isValid(indice, game_board):
+def is_valid(indice, game_board):
     
     new_row = indice[0]
     new_col = indice[1]
@@ -303,7 +296,7 @@ def check_winner(game_board, player):
         if is_match != None:
             return player
 
-    # (1,0) --> (0,1):
+    # Diagonal (1,0) --> (0,1):
     for k in range(number_to_win-1,N,1):
         s_line = ''
         xs = range(0,k+1)
@@ -332,7 +325,6 @@ def check_winner(game_board, player):
     return 0
 
 while True:
-    global cpSound
     global set_display
 
     point1 = 0
@@ -341,14 +333,5 @@ while True:
     set_display = pygame.display.set_mode((display_width,display_height))
     pygame.display.set_caption('Gomoku')
 
-    if play_music:
-        pygame.mixer.pre_init(44100)
-        bgSound = pygame.mixer.Sound('./sources/music/BackgroundMusic.ogg')
-        bgSound.set_volume(3)
-        bgSound.play(-1)
-    if play_sound:
-        pygame.mixer.pre_init(44100)
-        cpSound = pygame.mixer.Sound('./sources/music/Snd_click.ogg')
-        cpSound.set_volume(12)
 
     runGame()
