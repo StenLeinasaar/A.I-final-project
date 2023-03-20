@@ -3,6 +3,7 @@ import sys
 import random
 import re
 from pygame.locals import *
+from game_board import Board
 
 pygame.init()
 
@@ -154,9 +155,7 @@ def runGame():
     
     pygame.display.update()
 
-    gomoku_board = []
-    for column in range(N):
-        gomoku_board.append([0 for row in range(N)])
+    gomoku_board = Board()
 
     # Main loop
     while True: 
@@ -169,17 +168,18 @@ def runGame():
             # players play in turn
             if current_player == PLAYER1 and PLTYP1 == 'human':
                 row, col = get_piece_position()
-                while not is_valid((row, col), gomoku_board):
+                while not gomoku_board.is_valid((row, col)):
                     row, col = get_piece_position()
                     
             elif current_player == PLAYER2 and PLTYP2 == 'human':
                 row, col = get_piece_position()
-                while not is_valid((row, col),gomoku_board):
+                while not gomoku_board.is_valid((row, col)):
                     row, col = get_piece_position()
                     
             # add new piece
-            gomoku_board[row][col] = current_player
-            theWinner = check_winner(gomoku_board, current_player)
+            gomoku_board.play(current_player,(row, col))
+            # gomoku_board[row][col] = current_player
+            theWinner = gomoku_board.is_win(current_player)#check_winner(gomoku_board, current_player)
             draw_piece((row, col), current_player)
  
             # Change the player
@@ -194,18 +194,13 @@ def runGame():
             pygame.display.update()
 
         print('Winner: Player', theWinner)
-        print_board(gomoku_board)
+        gomoku_board.print_board()
         if theWinner == PLAYER1:
             player_info1['score'] += 1
         else:
             player_info2['score'] += 1
         
         message_surface(theWinner, green)
-
-def print_board(mat):
-    for bdraw in mat:
-        print(bdraw)
-    print('=' * 45)
 
 def draw_piece(indice, player):
     x = startx+line_width/2+indice[1]*(line_width+box_width)-(stone_size-1)/2
@@ -230,99 +225,56 @@ def get_piece_position():
                 
                 return row, col
 
-def is_valid(indice, game_board):
-    
-    new_row = indice[0]
-    new_col = indice[1]
 
-    if new_row < 0 or new_row > N-1:
-        return False
-    elif new_col < 0 or new_col > N-1:
-        return False
+# Evaluation function to set values. 
+def evaluate_board(game_board, player):
+    """
+    Evaluate the current board state and return a score for the given player.
+    """
 
-    return game_board[new_row][new_col] == 0
+    # This might not be a correct way. Make sure you can refer to an opponent as well
+    opponent = 3 - player
+    score = 0
 
+    # Check for winning positions
+    if game_board.is_win(player):
+        score += 1000
+    elif game_board.is_win(opponent):
+        score -= 1000
 
-# Main Logic to check for winner.
-def check_winner(game_board, player):
-    flag = 'x'
-    # rows:
-    for row in range(N):
-        s_row = ''
-        for col in range(N):
-            if game_board[row][col] == player:
-                s_row += flag
-            else:
-                s_row += '0'
-        is_match = re.search(flag*number_to_win,s_row)
-        if is_match != None:
-            return player
-        
-    # cols:
-    for col in range(N):
-        s_col = ''
-        for row in range(N):
-            if game_board[row][col] == player:
-                s_col += flag
-            else:
-                s_col += '0'
-        is_match = re.search(flag*number_to_win,s_col)
-        if is_match != None:
-            return player
+    # Count open rows, columns, and diagonals
+    open_fours = 0
+    open_threes = 0
+    open_twos = 0
+    for i in range(game_board.size):
+        for j in range(game_board.size):
+            if game_board[i][j] == 0:
+                if game_board.has_neighbor(i, j):
+                    count = game_board.count_open(i, j)
+                    if count >= 4:
+                        open_fours += 1
+                    elif count == 3:
+                        open_threes += 1
+                    elif count == 2:
+                        open_twos += 1
 
-    # Diagonal --> (0,0) --> (1,1):
-    for k in range(number_to_win-1,N,1):
-        s_line = ''
-        xs = range(0,k+1)
-        for x in xs:
-            y = k - x
-            if game_board[y][N-1-x] == player:
-                s_line += flag
-            else:
-                s_line += '0'
-        is_match = re.search(flag*number_to_win,s_line)
-        if is_match is not None:
-            return player
-    for k in range(N,2*(N-1)-(number_to_win-1)+1,1):
-        s_line = ''
-        xs = range(k-(N-1),N)
-        for x in xs:
-            y = k - x
-            if game_board[y][N-1-x] == player:
-                s_line += flag
-            else:
-                s_line += '0'
-        is_match = re.search(flag*number_to_win,s_line)
-        if is_match != None:
-            return player
+    # Add score based on open rows, columns, and diagonals
+    score += 100 * open_fours + 10 * open_threes + open_twos
 
-    # Diagonal (1,0) --> (0,1):
-    for k in range(number_to_win-1,N,1):
-        s_line = ''
-        xs = range(0,k+1)
-        for x in xs:
-            y = k - x
-            if game_board[y][x] == player:
-                s_line += flag
-            else:
-                s_line += '0'
-        is_match = re.search(flag*number_to_win,s_line)
-        if is_match is not None:
-            return player
-    for k in range(N,2*(N-1)-(number_to_win-1)+1,1):
-        s_line = ''
-        xs = range(k-(N-1),N)
-        for x in xs:
-            y = k - x
-            if game_board[y][x] == player:
-                s_line += flag
-            else:
-                s_line += '0'
-        is_match = re.search(flag*number_to_win,s_line)
-        if is_match != None:
-            return player
-        
-    return 0
+    # Subtract penalty for opponent's open rows, columns, and diagonals
+    for i in range(game_board.size):
+        for j in range(game_board.size):
+            if game_board[i][j] == opponent:
+                if game_board.has_neighbor(i, j):
+                    count = game_board.count_open(i, j)
+                    if count >= 4:
+                        score -= 100
+                    elif count == 3:
+                        score -= 10
+                    elif count == 2:
+                        score -= 1
+
+    return score
 
 while True:
     global set_display
