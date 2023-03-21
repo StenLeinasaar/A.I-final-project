@@ -1,14 +1,15 @@
 import pygame
 import sys
-import random
-import re
 from pygame.locals import *
 from game_board import Board
+sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
+from alpha_beta_pruning import alpha_beta_pruning
 
 pygame.init()
 
 PLTYP1 = 'human'
-PLTYP2 = 'human'
+PLTYP2 = 'alpha-beta'
+
 
 white = (255,255,255)
 black = (0,0,0)
@@ -175,6 +176,10 @@ def runGame():
                 row, col = get_piece_position()
                 while not gomoku_board.is_valid((row, col)):
                     row, col = get_piece_position()
+
+            elif current_player == PLAYER2 and PLTYP2 == 'alpha-beta':
+                row, col = alpha_beta_pruning(gomoku_board, current_player)
+                
                     
             # add new piece
             gomoku_board.play(current_player,(row, col))
@@ -225,56 +230,6 @@ def get_piece_position():
                 
                 return row, col
 
-
-# Evaluation function to set values. 
-def evaluate_board(game_board, player):
-    """
-    Evaluate the current board state and return a score for the given player.
-    """
-
-    # This might not be a correct way. Make sure you can refer to an opponent as well
-    opponent = 3 - player
-    score = 0
-
-    # Check for winning positions
-    if game_board.is_win(player):
-        score += 1000
-    elif game_board.is_win(opponent):
-        score -= 1000
-
-    # Count open rows, columns, and diagonals
-    open_fours = 0
-    open_threes = 0
-    open_twos = 0
-    for i in range(game_board.size):
-        for j in range(game_board.size):
-            if game_board[i][j] == 0:
-                if game_board.has_neighbor(i, j):
-                    count = game_board.count_open(i, j)
-                    if count >= 4:
-                        open_fours += 1
-                    elif count == 3:
-                        open_threes += 1
-                    elif count == 2:
-                        open_twos += 1
-
-    # Add score based on open rows, columns, and diagonals
-    score += 100 * open_fours + 10 * open_threes + open_twos
-
-    # Subtract penalty for opponent's open rows, columns, and diagonals
-    for i in range(game_board.size):
-        for j in range(game_board.size):
-            if game_board[i][j] == opponent:
-                if game_board.has_neighbor(i, j):
-                    count = game_board.count_open(i, j)
-                    if count >= 4:
-                        score -= 100
-                    elif count == 3:
-                        score -= 10
-                    elif count == 2:
-                        score -= 1
-
-    return score
 
 while True:
     global set_display

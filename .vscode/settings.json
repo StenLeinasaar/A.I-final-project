@@ -1,5 +1,7 @@
 {
     "python.analysis.extraPaths": [
-        "./utility"
+        "./utility",
+        "./ai_players",
+        "./Game_logic"
     ]
 }
