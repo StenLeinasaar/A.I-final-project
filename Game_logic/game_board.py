@@ -115,12 +115,14 @@ class Board:
         for i in range(self.size):
             for j in range(self.size):
                 if self.grid[i][j] == 0:  # Check if cell is empty
-                    for dx, dy in [(0, 1), (1, 0), (1, 1), (1, -1)]:  # Check adjacent cells in four directions
+                    for dx, dy in [(0, 1), (0, -1), (1, 0), (1, -1), (-1,1), (1,1), (-1,-1), (-1,0)]:  # Check adjacent cells in four directions
                         x, y = i + dx, j + dy
                         if x >= 0 and x < self.size and y >= 0 and y < len(self.grid[x]) and self.grid[x][y] != 0:
                             nearby_moves.append((i, j))
                             break
         return nearby_moves
+    
+
     
     def print_board(self):
         for bdraw in self.grid:

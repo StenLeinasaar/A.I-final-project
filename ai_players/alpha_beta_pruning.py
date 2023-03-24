@@ -48,7 +48,10 @@ def alpha_beta_pruning(game_board:Board, player:int):
     # print(f"these are available moves {available_moves}")
     max_value = 0
     min_value = 1500000
-    best_move = available_moves[0]
+    try:
+        best_move = available_moves[0]
+    except IndexError:
+        best_move = (5,5)
     if player == 1:
         # Max player
         for move in available_moves:
@@ -150,6 +153,12 @@ def evaluate(game_board: Board, player:int, max_player):
     print(f"Score after punishing is {score}")
 
     return score
+
+
+
+
+
+
 
 
 

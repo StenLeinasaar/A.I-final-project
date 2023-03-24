@@ -7,7 +7,7 @@ from alpha_beta_pruning import alpha_beta_pruning
 
 pygame.init()
 
-PLTYP1 = 'human'
+PLTYP1 = 'alpha-beta'
 PLTYP2 = 'alpha-beta'
 
 
@@ -179,6 +179,8 @@ def runGame():
 
             elif current_player == PLAYER2 and PLTYP2 == 'alpha-beta':
                 row, col = alpha_beta_pruning(gomoku_board, current_player)
+            elif current_player == PLAYER1 and PLTYP1 == 'alpha-beta':
+                row,col = alpha_beta_pruning(gomoku_board, current_player)
                 
                     
             # add new piece
