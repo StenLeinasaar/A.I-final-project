@@ -7,7 +7,7 @@ from alpha_beta_pruning import alpha_beta_pruning
 
 pygame.init()
 
-PLTYP1 = 'alpha-beta'
+PLTYP1 = 'human'
 PLTYP2 = 'alpha-beta'
 
 
