@@ -1,4 +1,5 @@
 import re
+import numpy as np
 class Board:
     def __init__(self, size=15):
         self.size = size
@@ -121,6 +122,18 @@ class Board:
                             nearby_moves.append((i, j))
                             break
         return nearby_moves
+    
+
+    def get_reward(self, player):
+        opponent = 3- player
+        if self.is_win(player):
+            return 1
+        elif self.is_win(opponent):
+            return -1
+        elif np.count_nonzero(self.grid == 0) == 0:
+            return 0.5
+        else:
+            return 0
     
 
     

@@ -1,15 +1,30 @@
 from game_board import Board
 import sys
 
-def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int) -> int:
+
+MIN = -99999999
+MAX = 99999999
+
+score_5 = 5
+score_4_live = 4.5
+score_4_and_3_live = 4.3
+score_4 = 4
+score_double_3_live = 3.8
+score_3_live = 3.5
+score_3 = 3
+score_double_2_live = 3
+score_2_live = 2.5
+score_2 = 2
+
+def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, move) -> int:
     # print(f"max val called with depth {depth}")
     if depth == 0: #or game_board.get_state() in [0,-1,1]: # or (node is either draw, lose or win.
-        return evaluate(game_board, player,True)
+        return evaluate(game_board, player,True) #evaluate_point(game_board, move)
     best_value = -float("inf")
     moves = game_board.get_possible_moves() #NEED a function to get all possible moves
     for move in moves:
         game_board.play(player, move)
-        value = min_val(game_board, depth-1, alpha, beta, player)
+        value = min_val(game_board, depth-1, alpha, beta, player, move)
         best_value = max(best_value, value)
         alpha = max(alpha, best_value)
         game_board.undo(move)
@@ -20,7 +35,7 @@ def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int) -> 
 
 
 
-def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int) -> int:
+def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, move) -> int:
     # print(f"Min val function called, depth is {depth}")
     if depth == 0: #or game_board.get_state() in [0,-1,1]: # or (node is either draw, lose or win.
         # print("returning evaluate score to main function")
@@ -29,7 +44,7 @@ def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int) -> 
     moves = game_board.get_possible_moves()
     for move in moves:
         game_board.play(player,move)
-        value = max_val(game_board, depth-1, alpha, beta, player)
+        value = max_val(game_board, depth-1, alpha, beta, player, move)
         best_value = min(best_value, value)
         beta = min(beta, best_value)
         game_board.undo(move)
@@ -56,7 +71,7 @@ def alpha_beta_pruning(game_board:Board, player:int):
         # Max player
         for move in available_moves:
             game_board.play(player,move)
-            value = max_val(game_board, depth, alpha, beta, player)
+            value = max_val(game_board, depth, alpha, beta, player, move)
             if value > max_value:
                 max_value = value
                 best_move = move
@@ -70,7 +85,7 @@ def alpha_beta_pruning(game_board:Board, player:int):
             game_board.play(player,move)
             # print("made a move, printing a game board")
             # print(f'calling a min player, depth is {depth}')
-            value = min_val(game_board, depth, alpha, beta, player)
+            value = min_val(game_board, depth, alpha, beta, player, move)
             if value < min_value:
                 min_value = value
                 best_move = move
@@ -153,6 +168,8 @@ def evaluate(game_board: Board, player:int, max_player):
     print(f"Score after punishing is {score}")
 
     return score
+
+
 
 
 

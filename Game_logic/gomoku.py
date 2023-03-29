@@ -4,12 +4,14 @@ from pygame.locals import *
 from game_board import Board
 sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
 from alpha_beta_pruning import alpha_beta_pruning
+from sarsa_agent import SarsaAgent
 
 pygame.init()
 
 PLTYP1 = 'human'
-PLTYP2 = 'alpha-beta'
+PLTYP2 = 'sarsa'
 
+sarsa_player = SarsaAgent()
 
 white = (255,255,255)
 black = (0,0,0)
@@ -103,6 +105,7 @@ def update_info(info1,info2,player):
 def check_next():
     for event in pygame.event.get([KEYDOWN, KEYUP, QUIT]):
         if event.type == QUIT:
+            sarsa_player.exit_print()
             pygame.quit()
             sys.exit()
         elif event.type == KEYDOWN:
@@ -137,8 +140,10 @@ def message_surface(player, text_color):
 
 
     while check_next() == None:
+        print("waiting for a next thing, game ended")
         for event in pygame.event.get([QUIT]):
             if event.type == QUIT:
+                sarsa_player.exit_print()
                 pygame.quit()
                 sys.exit()
         pygame.display.update()
@@ -163,6 +168,7 @@ def runGame():
         while theWinner == 0:
             for event in pygame.event.get(): 
                 if event.type == QUIT:
+                    sarsa_player.exit_print()
                     pygame.quit()
                     sys.exit()
 
@@ -181,6 +187,9 @@ def runGame():
                 row, col = alpha_beta_pruning(gomoku_board, current_player)
             elif current_player == PLAYER1 and PLTYP1 == 'alpha-beta':
                 row,col = alpha_beta_pruning(gomoku_board, current_player)
+            elif current_player == PLAYER2 and PLTYP2 == 'sarsa':
+                row, col = sarsa_player.get_move(gomoku_board, current_player)
+                print(f"{row}, {col}")
                 
                     
             # add new piece
