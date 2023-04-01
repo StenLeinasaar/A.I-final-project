@@ -243,7 +243,7 @@ class SarsaAgent:
     
     def game_over(self, board:Board, player:int):
 
-        reward = board.get_reward(player)
+        reward = self.alpha(board.get_reward(player))
         # update weight based on reward. Question...
 
     def exit_print(self):
