@@ -213,8 +213,11 @@ def runGame():
         gomoku_board.print_board()
         if theWinner == PLAYER1:
             player_info1['score'] += 1
+            sarsa_player.game_over(gomoku_board, current_player)
+
         else:
             player_info2['score'] += 1
+            sarsa_player.game_over(gomoku_board, current_player)
         
         message_surface(theWinner, green)
 

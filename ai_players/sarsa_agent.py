@@ -74,7 +74,7 @@ for each episode
 
 class SarsaAgent:
     def __init__(self, epsilon=0.1, alpha=0.5, gamma=0.7, size=15):
-        self.weights = np.zeros(3)
+        self.weights = np.zeros(5)
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma
@@ -97,7 +97,7 @@ class SarsaAgent:
                 '''
                 # Make the move
                 board.play(player, move)
-                q_values[move] = np.dot(self.weights, self.feature_vector(board) )
+                q_values[move] = np.dot(self.weights, self.feature_vector(board, player) )
                 # Undo the move
                 board.undo(move)
 
@@ -115,18 +115,30 @@ class SarsaAgent:
 #         weight  = weight + alpha(gamma + gamma(weight_old * feature_vector(new_State, new_Action) - weight * feature_vectore(state, action))) * feature(state, action) 
     
 #     '''
-    def update_weights(self, state, next_state):
+    def update_weights(self, state, next_state, player):
+
+        
 
         print(f"weights before updating {self.weights}")
 
-        new_weights = self.alpha * (self.gamma + self.gamma * (self.weights * self.feature_vector(next_state)) - (self.weights * self.feature_vector(state)) * self.feature_vector(state))
+        new_weights = self.alpha * (self.gamma * (self.weights * self.feature_vector(next_state, player)) - (self.weights * self.feature_vector(state, player)) * self.feature_vector(state, player))
         print(f"the new weights are {new_weights}")
         for i, weight in enumerate(self.weights):
             self.weights[i] = weight +  new_weights[i]
         print(f"updated weights are {self.weights}")
 
-    def feature_vector(self, board:Board):
-        features = np.zeros(3)
+    def update_weights_reward(self, state, next_state, reward,player):
+        print(f"weights before updating {self.weights}")
+
+        new_weights = self.alpha * (reward + self.gamma * (self.weights * self.feature_vector(next_state, player)) - (self.weights * self.feature_vector(state, player)) * self.feature_vector(state, player))
+        print(f"the new weights are {new_weights}")
+        for i, weight in enumerate(self.weights):
+            self.weights[i] = weight +  new_weights[i]
+        print(f"updated weights are {self.weights}")
+
+    def feature_vector(self, board:Board, player):
+        opponent = 3 - player
+        features = np.zeros(5)
         # iterate over each cell of the board
         for i in range(board.size):
             for j in range(board.size):
@@ -137,41 +149,81 @@ class SarsaAgent:
                 #     # if the cell contains a player's piece, append a 1 to the feature vector
                 #     features.append(1)
                 
-                # Feature of how many straight line of four pieces
+                # Feature of how many straight line of four pieces opponent has
                 # add feature to detect straight line of four pieces
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
                     for k in range(-3, 1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == 1:
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 4:
-                        features[0] += 1
+                        features[0] -= 1
+
+
+                # feature of how many fours pieces in a line for the player
+
+                for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
+                    count = 0
+                    for k in range(-3, 1):
+                        x = i + k*dx
+                        y = j + k*dy
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == player:
+                            count += 1
+                    if count == 4:
+                        features[1] += 1
+
+                
 
             
-                #feature of number of open threes
+                #feature of number of open threes opponent has
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
                     for k in range(-2, 1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == 1:
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 3:
-                        features[1] += 1
+                        features[2] -= 1
 
 
-                #feature of number of open twos/ possible open threes
+                # Feature of numbre of open threes player has
+
+                for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
+                    count = 0
+                    for k in range(-2, 1):
+                        x = i + k*dx
+                        y = j + k*dy
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == player:
+                            count += 1
+                    if count == 3:
+                        features[3] += 1
+
+
+                #feature of number of open twos/ possible open threes for the opponent
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
                     for k in range(-1, 1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == 1:
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 2:
-                        features[2] += 1
+                        features[4] -= 1
+
+                # feature of number of open twos/possible open threes for the player
+                for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
+                    count = 0
+                    for k in range(-1, 1):
+                        x = i + k*dx
+                        y = j + k*dy
+                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
+                            count += 1
+                    if count == 2:
+                        features[5] += 1
+
                 
                 
                 # add feature to capture influence map
@@ -233,7 +285,7 @@ class SarsaAgent:
         self.current_action = self.choose_action(board, player)
 
         if self.previous_state != None:
-            self.update_weights(self.previous_state, self.current_state)
+            self.update_weights(self.previous_state, self.current_state, player)
             
 
         self.previous_state = self.current_state
@@ -243,7 +295,8 @@ class SarsaAgent:
     
     def game_over(self, board:Board, player:int):
 
-        reward = self.alpha(board.get_reward(player))
+        reward = self.alpha * (board.get_reward(player))
+        self.update_weights_reward(self.previous_state, self.current_state, reward, player)
         # update weight based on reward. Question...
 
     def exit_print(self):
