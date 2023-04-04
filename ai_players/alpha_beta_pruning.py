@@ -5,16 +5,6 @@ import sys
 MIN = -99999999
 MAX = 99999999
 
-score_5 = 5
-score_4_live = 4.5
-score_4_and_3_live = 4.3
-score_4 = 4
-score_double_3_live = 3.8
-score_3_live = 3.5
-score_3 = 3
-score_double_2_live = 3
-score_2_live = 2.5
-score_2 = 2
 
 def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, move) -> int:
     # print(f"max val called with depth {depth}")

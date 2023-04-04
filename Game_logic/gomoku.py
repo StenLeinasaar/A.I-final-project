@@ -8,10 +8,11 @@ from sarsa_agent import SarsaAgent
 
 pygame.init()
 
-PLTYP1 = 'human'
+PLTYP1 = 'sarsa'
 PLTYP2 = 'sarsa'
 
-sarsa_player = SarsaAgent()
+sarsa_player_two = SarsaAgent()
+sarsa_player_one = SarsaAgent()
 
 white = (255,255,255)
 black = (0,0,0)
@@ -105,7 +106,8 @@ def update_info(info1,info2,player):
 def check_next():
     for event in pygame.event.get([KEYDOWN, KEYUP, QUIT]):
         if event.type == QUIT:
-            sarsa_player.exit_print()
+            sarsa_player_one.exit_print(player_info1, player_info2)
+            sarsa_player_two.exit_print(player_info1, player_info2)
             pygame.quit()
             sys.exit()
         elif event.type == KEYDOWN:
@@ -140,10 +142,10 @@ def message_surface(player, text_color):
 
 
     while check_next() == None:
-        print("waiting for a next thing, game ended")
         for event in pygame.event.get([QUIT]):
             if event.type == QUIT:
-                sarsa_player.exit_print()
+                sarsa_player_one.exit_print(player_info1, player_info2)
+                sarsa_player_two.exit_print(player_info1, player_info2)
                 pygame.quit()
                 sys.exit()
         pygame.display.update()
@@ -168,7 +170,8 @@ def runGame():
         while theWinner == 0:
             for event in pygame.event.get(): 
                 if event.type == QUIT:
-                    sarsa_player.exit_print()
+                    sarsa_player_one.exit_print(player_info1, player_info2)
+                    sarsa_player_two.exit_print(player_info1, player_info2)
                     pygame.quit()
                     sys.exit()
 
@@ -188,8 +191,10 @@ def runGame():
             elif current_player == PLAYER1 and PLTYP1 == 'alpha-beta':
                 row,col = alpha_beta_pruning(gomoku_board, current_player)
             elif current_player == PLAYER2 and PLTYP2 == 'sarsa':
-                row, col = sarsa_player.get_move(gomoku_board, current_player)
+                row, col = sarsa_player_two.get_move(gomoku_board, current_player)
                 print(f"{row}, {col}")
+            elif current_player == PLAYER1 and PLTYP1=='sarsa':
+                row, col = sarsa_player_one.get_move(gomoku_board, current_player)
                 
                     
             # add new piece
@@ -213,11 +218,13 @@ def runGame():
         gomoku_board.print_board()
         if theWinner == PLAYER1:
             player_info1['score'] += 1
-            sarsa_player.game_over(gomoku_board, current_player)
+            sarsa_player_one.game_over(gomoku_board, current_player)
+            sarsa_player_two.game_over(gomoku_board, current_player )
 
         else:
             player_info2['score'] += 1
-            sarsa_player.game_over(gomoku_board, current_player)
+            sarsa_player_one.game_over(gomoku_board, current_player)
+            sarsa_player_two.game_over(gomoku_board, current_player )
         
         message_surface(theWinner, green)
 

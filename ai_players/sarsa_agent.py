@@ -73,8 +73,8 @@ for each episode
 
 
 class SarsaAgent:
-    def __init__(self, epsilon=0.1, alpha=0.5, gamma=0.7, size=15):
-        self.weights = np.zeros(5)
+    def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15):
+        self.weights = [-12,12,-10,10,-6,6]
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma
@@ -87,6 +87,8 @@ class SarsaAgent:
     
     def choose_action(self, board:Board, player):
         moves = board.get_possible_moves()
+        if len(moves) == 0:
+            return (7,7)
         if np.random.uniform() < self.epsilon:
             return moves[randint(0, len(moves)-1)]
         else:
@@ -101,9 +103,7 @@ class SarsaAgent:
                 # Undo the move
                 board.undo(move)
 
-                '''
-                return might be wrong right now
-                '''
+                
             print(f"sending a move {max(q_values)}")
             return max(q_values)#key=q_values.get)  == send the move back
 
@@ -125,6 +125,10 @@ class SarsaAgent:
         print(f"the new weights are {new_weights}")
         for i, weight in enumerate(self.weights):
             self.weights[i] = weight +  new_weights[i]
+            if self.weights[i] >= 20:
+                self.weights[i] == 18
+            elif self.weights[i] >= -20:
+                self.weights[i] == -18
         print(f"updated weights are {self.weights}")
 
     def update_weights_reward(self, state, next_state, reward,player):
@@ -134,11 +138,15 @@ class SarsaAgent:
         print(f"the new weights are {new_weights}")
         for i, weight in enumerate(self.weights):
             self.weights[i] = weight +  new_weights[i]
+            if self.weights[i] >= 20:
+                self.weights[i] == 18
+            elif self.weights[i] >= -20:
+                self.weights[i] == -18
         print(f"updated weights are {self.weights}")
 
     def feature_vector(self, board:Board, player):
         opponent = 3 - player
-        features = np.zeros(5)
+        features = np.zeros(6)
         # iterate over each cell of the board
         for i in range(board.size):
             for j in range(board.size):
@@ -299,7 +307,7 @@ class SarsaAgent:
         self.update_weights_reward(self.previous_state, self.current_state, reward, player)
         # update weight based on reward. Question...
 
-    def exit_print(self):
+    def exit_print(self, player_info1, player_info2):
         file_number = 0
         # prints the weights to the file
         filename = f"weights_{file_number}"
@@ -313,6 +321,10 @@ class SarsaAgent:
           
         with open(filename, 'a') as file:
             file.write(str(self.weights))
+            file.write("  ")
+            file.write(str(f"Player1 {player_info1}"))
+            file.write("  ")
+            file.write(str(f"player2: {player_info2}"))
             file.write("\n")
             
 
