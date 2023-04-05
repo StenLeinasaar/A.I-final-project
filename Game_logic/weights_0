@@ -1,19 +1,110 @@
-[6.65 6.65 6.65][8.75 8.75 8.75][1.05 1.05 1.05]
-[1.05 1.05 1.05]
-[0. 0. 0.]
-[0. 0. 0.]
-[-2.5 -2.5 -2.5]
-[-0.25 -0.25 -0.25]
-[-2. -2. -2. -2. -2.]
-[-0.5 -0.5 -0.5 -0.5 -0.5]
-[-0.25 -0.25 -0.25 -0.25 -0.25]
-[-4.25 -4.25 -4.25 -4.25 -4.25]  {'score': 5}  {'score': 12}
-[-4.25 -4.25 -4.25 -4.25 -4.25]  {'score': 5}  {'score': 12}
-[-4.5 -4.5 -4.5 -4.5 -4.5]  Player1 {'score': 5}  player2: {'score': 13}
-[-4.5 -4.5 -4.5 -4.5 -4.5]  Player1 {'score': 5}  player2: {'score': 13}
-[-26.75, -2.75, -24.75, -4.75, -20.75, -8.75]  Player1 {'score': 34}  player2: {'score': 25}
-[-26.75, -2.75, -24.75, -4.75, -20.75, -8.75]  Player1 {'score': 34}  player2: {'score': 25}
-[-29.75, -5.75, -27.75, -7.75, -23.75, -11.75]  Player1 {'score': 33}  player2: {'score': 38}
-[-29.75, -5.75, -27.75, -7.75, -23.75, -11.75]  Player1 {'score': 33}  player2: {'score': 38}
-[-19.25, 4.75, -17.25, 2.75, -13.25, -1.25]  Player1 {'score': 11}  player2: {'score': 18}
-[-19.25, 4.75, -17.25, 2.75, -13.25, -1.25]  Player1 {'score': 11}  player2: {'score': 18}
+player 1 weights[-19.75, -9.75, -19.75, -11.75, -19.75, -15.75]  player 2 weights[-19.75, -9.75, -19.75, -11.75, -19.75, -15.75]  Player1 score: 45  Player2 score: 56
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 100  Player2 score: 101
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 154  Player2 score: 147
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 197  Player2 score: 204
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 245  Player2 score: 256
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 292  Player2 score: 309
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 346  Player2 score: 355
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 402  Player2 score: 399
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 454  Player2 score: 447
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 507  Player2 score: 494
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 551  Player2 score: 550
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 611  Player2 score: 590
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 666  Player2 score: 635
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 716  Player2 score: 685
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 769  Player2 score: 732
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 820  Player2 score: 781
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 870  Player2 score: 831
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 919  Player2 score: 882
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 970  Player2 score: 931
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1019  Player2 score: 982
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 1060  Player2 score: 1041
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1107  Player2 score: 1094
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 1150  Player2 score: 1151
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1204  Player2 score: 1197
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1257  Player2 score: 1244
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 1305  Player2 score: 1296
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1357  Player2 score: 1344
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1403  Player2 score: 1398
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1459  Player2 score: 1442
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1509  Player2 score: 1492
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1559  Player2 score: 1542
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1604  Player2 score: 1597
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1654  Player2 score: 1647
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 1698  Player2 score: 1703
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 1756  Player2 score: 1745
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 1805  Player2 score: 1796
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 1861  Player2 score: 1840
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 1915  Player2 score: 1886
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 1965  Player2 score: 1936
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 2016  Player2 score: 1985
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 2075  Player2 score: 2026
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2132  Player2 score: 2069
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 2180  Player2 score: 2121
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 2230  Player2 score: 2171
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 2281  Player2 score: 2220
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 2329  Player2 score: 2272
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2384  Player2 score: 2317
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2425  Player2 score: 2376
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 2477  Player2 score: 2424
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2522  Player2 score: 2479
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 2565  Player2 score: 2536
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 2609  Player2 score: 2592
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 2655  Player2 score: 2646
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 2713  Player2 score: 2688
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2762  Player2 score: 2739
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 2821  Player2 score: 2780
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2870  Player2 score: 2831
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 2912  Player2 score: 2889
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 2964  Player2 score: 2937
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3012  Player2 score: 2989
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 3068  Player2 score: 3033
+player 1 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  player 2 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  Player1 score: 3111  Player2 score: 3090
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3175  Player2 score: 3126
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3224  Player2 score: 3177
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3277  Player2 score: 3224
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3327  Player2 score: 3274
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3370  Player2 score: 3331
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3425  Player2 score: 3376
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 3487  Player2 score: 3414
+player 1 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  player 2 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  Player1 score: 3541  Player2 score: 3460
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3592  Player2 score: 3509
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 3646  Player2 score: 3555
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 3689  Player2 score: 3612
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3732  Player2 score: 3669
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3788  Player2 score: 3713
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 3849  Player2 score: 3752
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 3899  Player2 score: 3802
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3951  Player2 score: 3850
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 3999  Player2 score: 3902
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 4050  Player2 score: 3951
+player 1 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  player 2 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  Player1 score: 4101  Player2 score: 4000
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4153  Player2 score: 4048
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 4204  Player2 score: 4097
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 4253  Player2 score: 4148
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4306  Player2 score: 4195
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 4358  Player2 score: 4243
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4413  Player2 score: 4288
+player 1 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  player 2 weights[-17.75, -17.75, -17.75, -17.75, -17.75, -17.75]  Player1 score: 4471  Player2 score: 4330
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 4523  Player2 score: 4378
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 4574  Player2 score: 4427
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 4619  Player2 score: 4482
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4678  Player2 score: 4523
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 4728  Player2 score: 4573
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 4773  Player2 score: 4628
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4824  Player2 score: 4677
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 4871  Player2 score: 4730
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 4918  Player2 score: 4783
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 4968  Player2 score: 4833
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5023  Player2 score: 4878
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5070  Player2 score: 4931
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 5111  Player2 score: 4990
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5166  Player2 score: 5035
+player 1 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  player 2 weights[-19.25, -19.25, -19.25, -19.25, -19.25, -19.25]  Player1 score: 5211  Player2 score: 5090
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5258  Player2 score: 5143
+player 1 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  player 2 weights[-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]  Player1 score: 5304  Player2 score: 5197
+player 1 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  player 2 weights[-18.75, -18.75, -18.75, -18.75, -18.75, -18.75]  Player1 score: 5359  Player2 score: 5242
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5416  Player2 score: 5285
+player 1 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  player 2 weights[-18.25, -18.25, -18.25, -18.25, -18.25, -18.25]  Player1 score: 5461  Player2 score: 5340
+[-12, 12, -10, 10, -6, 6]  Player1 score: 1  Player2 score: 0
+[-12, 12, -10, 10, -6, 6]  Player1 score: 1  Player2 score: 0

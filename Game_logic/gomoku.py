@@ -5,11 +5,12 @@ from game_board import Board
 sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
 from alpha_beta_pruning import alpha_beta_pruning
 from sarsa_agent import SarsaAgent
+import os
 
 pygame.init()
 
-PLTYP1 = 'sarsa'
-PLTYP2 = 'sarsa'
+PLTYP1 = 'human'
+PLTYP2 = 'alpha-beta'
 
 sarsa_player_two = SarsaAgent()
 sarsa_player_one = SarsaAgent()
@@ -20,6 +21,7 @@ red = (175,0,0)
 green = (0,120,0)
 lightgreen = (0,175,0)
 bg = (32,32,32,255)
+games_played = 0
 
 PLAYER1 = 1
 PLAYER2 = 2
@@ -106,12 +108,15 @@ def update_info(info1,info2,player):
 def check_next():
     for event in pygame.event.get([KEYDOWN, KEYUP, QUIT]):
         if event.type == QUIT:
-            sarsa_player_one.exit_print(player_info1, player_info2)
-            sarsa_player_two.exit_print(player_info1, player_info2)
+            # print_weights()
             pygame.quit()
             sys.exit()
         elif event.type == KEYDOWN:
+            print("key down was pressed")
             continue
+
+        # print(f"event key is  {event.key}")
+        # print(f"event type is {event.type}" )
         return event.key
     return None
 
@@ -144,8 +149,6 @@ def message_surface(player, text_color):
     while check_next() == None:
         for event in pygame.event.get([QUIT]):
             if event.type == QUIT:
-                sarsa_player_one.exit_print(player_info1, player_info2)
-                sarsa_player_two.exit_print(player_info1, player_info2)
                 pygame.quit()
                 sys.exit()
         pygame.display.update()
@@ -170,8 +173,7 @@ def runGame():
         while theWinner == 0:
             for event in pygame.event.get(): 
                 if event.type == QUIT:
-                    sarsa_player_one.exit_print(player_info1, player_info2)
-                    sarsa_player_two.exit_print(player_info1, player_info2)
+                    # print_weights()
                     pygame.quit()
                     sys.exit()
 
@@ -192,7 +194,7 @@ def runGame():
                 row,col = alpha_beta_pruning(gomoku_board, current_player)
             elif current_player == PLAYER2 and PLTYP2 == 'sarsa':
                 row, col = sarsa_player_two.get_move(gomoku_board, current_player)
-                print(f"{row}, {col}")
+                # print(f"{row}, {col}")
             elif current_player == PLAYER1 and PLTYP1=='sarsa':
                 row, col = sarsa_player_one.get_move(gomoku_board, current_player)
                 
@@ -214,19 +216,21 @@ def runGame():
             update_info(player_info1, player_info2, current_player)
             pygame.display.update()
 
-        print('Winner: Player', theWinner)
-        gomoku_board.print_board()
+        # print('Winner: Player', theWinner)
+        # gomoku_board.print_board()
         if theWinner == PLAYER1:
             player_info1['score'] += 1
-            sarsa_player_one.game_over(gomoku_board, current_player)
-            sarsa_player_two.game_over(gomoku_board, current_player )
+            # sarsa_player_one.game_over(gomoku_board, current_player)
+            # sarsa_player_two.game_over(gomoku_board, current_player )
 
         else:
             player_info2['score'] += 1
-            sarsa_player_one.game_over(gomoku_board, current_player)
-            sarsa_player_two.game_over(gomoku_board, current_player )
+            # sarsa_player_one.game_over(gomoku_board, current_player)
+            # sarsa_player_two.game_over(gomoku_board, current_player )
         
         message_surface(theWinner, green)
+
+
 
 def draw_piece(indice, player):
     x = startx+line_width/2+indice[1]*(line_width+box_width)-(stone_size-1)/2
@@ -250,6 +254,29 @@ def get_piece_position():
                 col = int(round((x-startx-line_width/2.0)/(line_width+box_width)))
                 
                 return row, col
+def print_weights():
+    file_number = 0
+    # prints the weights to the file
+    filename = f"weights_{file_number}"
+    print("file about to be written", filename)
+    if os.path.exists(f"Game_logic/{filename}"):
+        file_stat = os.stat(filename)
+        if file_stat.st_size() > 100000000:
+            file_number += 1
+            filename = f"weights_{file_number}"
+            
+        
+    with open(filename, 'a') as file:
+        file.write("player 1 weights")
+        file.write(str(sarsa_player_one.weights))
+        file.write("  ")
+        file.write("player 2 weights")
+        file.write(str(sarsa_player_two.weights))
+        file.write("  ")
+        file.write(f"Player1 score: {player_info1.get('score')}")
+        file.write("  ")
+        file.write(f"Player2 score: {player_info2.get('score')}")
+        file.write("\n")
 
 
 while True:
