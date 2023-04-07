@@ -16,7 +16,7 @@ import os
 
 class QLearning:
     def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15):
-        self.weights = [-12,12,-10,10,-6,6]
+        self.weights = [-19.75, 19.75, -19.75, 19.75, -19.75, 19.75,-19.75, 19.75, 19.75,0]
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma
@@ -155,42 +155,53 @@ class QLearning:
         # print(f"updated weights are {self.weights}")
 
     def feature_vector(self, board:Board, player):
+        # print("I am making a feature vector")
         opponent = 3 - player
-        features = np.zeros(6)
+
+       
+        features = np.zeros(10)
+        features[8] = 0
+        features[9] = 0
         # iterate over each cell of the board
-        for i in range(board.size):
-            for j in range(board.size):
-                # # if the cell is empty, append a 0 to the feature vector
-                # if board.grid[i][j] == 0:
-                #     features.append(0)
-                # else:
-                #     # if the cell contains a player's piece, append a 1 to the feature vector
-                #     features.append(1)
+        for i in range(self.size):
+            for j in range(self.size):
+
+
+                # Empty cells
+                # if the cell is empty, append a 0 to the feature vector
+                if board.grid[i][j] == 0:
+                    features[0] += 1
+                elif board.grid[i][j] == opponent:
+                    features[1] -= 1
+            
                 
                 # Feature of how many straight line of four pieces opponent has
                 # add feature to detect straight line of four pieces
+            
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
+                    # print("for all directions, k in range of -3, 1")
                     count = 0
-                    for k in range(-3, 1):
+                    for k in range(3, -1,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
+                        if (x >= 0 and x < self.size) and (y >= 0 and y < self.size) and (board.grid[x][y] == opponent):
                             count += 1
                     if count == 4:
-                        features[0] -= 1
+                        features[2] -= 1
+            
 
 
                 # feature of how many fours pieces in a line for the player
 
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
-                    for k in range(-3, 1):
+                    for k in range(3, -1,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == player:
+                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == player:
                             count += 1
                     if count == 4:
-                        features[1] += 1
+                        features[3] += 1
 
                 
 
@@ -198,103 +209,73 @@ class QLearning:
                 #feature of number of open threes opponent has
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
-                    for k in range(-2, 1):
+                    for k in range(3, 0,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
+                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 3:
-                        features[2] -= 1
+                        features[4] -= 1
 
 
                 # Feature of numbre of open threes player has
 
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
-                    for k in range(-2, 1):
+                    for k in range(3, 0,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == player:
+                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == player:
                             count += 1
                     if count == 3:
-                        features[3] += 1
+                        features[5] += 1
 
 
                 #feature of number of open twos/ possible open threes for the opponent
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
-                    for k in range(-1, 1):
+                    for k in range(2, 0,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
+                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 2:
-                        features[4] -= 1
+                        features[6] -= 1
 
                 # feature of number of open twos/possible open threes for the player
                 for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
                     count = 0
-                    for k in range(-1, 1):
+                    for k in range(2,0, -1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < board.size and y >= 0 and y < board.size and board.grid[x][y] == opponent:
+                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == opponent:
                             count += 1
                     if count == 2:
-                        features[5] += 1
+                        features[7] += 1
 
-                
-                
-                # add feature to capture influence map
-                # player_influence = np.zeros((self.size, self.size))
-                # opponent_influence = np.zeros((self.size, self.size))
-                # for x in range(board.size):
-                #     for y in range(board.size):
-                #         if board.grid[x][y] != 0:
-                #             if board.grid[x][y] == 1:
-                #                 influence_map = player_influence
-                #             else:
-                #                 influence_map = opponent_influence
-                #             for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
-                #                 for k in range(1, 4):
-                #                     i = x + k*dx
-                #                     j = y + k*dy
-                #                     if i >= 0 and i < board.size and j >= 0 and j < board.size:
-                #                         influence_map[i][j] += 1 / k
-                # features.extend(player_influence.flatten())
-                # features.extend(opponent_influence.flatten())
-                
-                # # add feature to capture mobility
-                # player_mobility = np.zeros((self.size, self.size))
-                # opponent_mobility = np.zeros((self.size, self.size))
-                # for x in range(board.size):
-                #     for y in range(board.size):
-                #         if board.grid[x][y] == 0:
-                #             for dx, dy in [(1, 0), (0, 1), (1, 1), (-1, 1)]:
-                #                 i = x + dx
-                #                 j = y + dy
-                #                 if i >= 0 and i < board.size and j >= 0 and j < board.size:
-                #                     if board.grid[i][j] == 1:
-                #                         mobility_map = player_mobility
-                #                     elif board.grid[i][j] == -1:
-                #                         mobility_map = opponent_mobility
-                #                     else:
-                #                         continue
-                #                     for k in range(2, 5):
-                #                         i = x + k*dx
-                #                         j = y + k*dy
-                #                         if i >= 0 and i < board.size and j >= 0 and j < board.size and board.grid[i][j] == 0:
-                #                             mobility_map[x][y] += 1 / k
-                # features.extend(player_mobility.flatten())
-                # features.extend(opponent_mobility.flatten())
 
-                # add feature to capture positional features
-                # center_x = board.size // 2
-                # center_y = board.size // 2
-                # distance from center
-                # distance = math.sqrt((i - center_x)**2 + (j - center_y)**2)
-                # features.append(distance)
-               
-                return features
+        if opponent == 1:
+            patterns_opponent = ["101", "1011", "1101"]
+            patterns_player = ["202", "2022", "2202"]
+        else:
+            patterns_opponent = ["202", "2022", "2202"]
+            patterns_player = ["101", "1011", "1101"]
+
+        
+        # FEATURE - Opponent patterns and player patterns
+        for i in range(board.size):
+            stringstuff = ''
+            for el in board.grid[i]:
+                stringstuff += str(el)
+            for pattern in patterns_opponent:
+                if pattern in stringstuff:
+                    features[8] -= 1
+
+            for pattern in patterns_player:
+                 if pattern in stringstuff:
+                    features[9] += 1
+
+        return features
             
     def get_move(self, board:Board, player):
 

@@ -6,14 +6,17 @@ sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
 from alpha_beta_pruning import alpha_beta_pruning
 from sarsa_agent import SarsaAgent
 import os
+from q_learning import QLearning
 
 pygame.init()
 
 PLTYP1 = 'human'
-PLTYP2 = 'alpha-beta'
+PLTYP2 = 'q-learning'
 
 sarsa_player_two = SarsaAgent()
 sarsa_player_one = SarsaAgent()
+q_player_one = QLearning()
+q_player_two = QLearning()
 
 white = (255,255,255)
 black = (0,0,0)
@@ -197,6 +200,11 @@ def runGame():
                 # print(f"{row}, {col}")
             elif current_player == PLAYER1 and PLTYP1=='sarsa':
                 row, col = sarsa_player_one.get_move(gomoku_board, current_player)
+            elif current_player == PLAYER2 and PLTYP2 == 'q-learning':
+                row, col = q_player_two.get_move(gomoku_board, current_player)
+                # print(f"{row}, {col}")
+            elif current_player == PLAYER1 and PLTYP1=='q-learning':
+                row, col = q_player_one.get_move(gomoku_board, current_player)
                 
                     
             # add new piece
