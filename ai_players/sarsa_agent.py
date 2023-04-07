@@ -39,7 +39,7 @@ for each episode
 
 class SarsaAgent:
     def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15):
-        self.weights = [-19.75, -19.75, -19.75, -19.75, -19.75, -19.75]
+        self.weights = [-19.75, 19.75, -19.75, 19.75, -19.75, 19.75,-19.75, 19.75, 19.75,0]
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma
