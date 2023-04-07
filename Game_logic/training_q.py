@@ -1,9 +1,9 @@
 import os
 import sys
 from game_board import Board
-sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
+sys.path.append("../ai_players")
 from q_learning import QLearning
-import traceback
+
 
 PLTYP1 = 'q-learning'
 PLTYP2 = 'q-learning'
