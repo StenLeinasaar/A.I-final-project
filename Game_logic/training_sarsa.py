@@ -59,16 +59,11 @@ def play_gomoku():
             break
     return theWinner
 
-    
-
-
-
-
 
 def print_weights():
     file_number = 0
     # prints the weights to the file
-    filename = f"weights_{file_number}"
+    filename = f"sarsa_weights_{file_number}"
     print("file about to be written", filename)
     if os.path.exists(f"Game_logic/{filename}"):
         file_stat = os.stat(filename)
@@ -93,7 +88,7 @@ def print_weights():
 def main():
     games_played = 0
     i = 0
-    while i < 10000000:
+    while i < 1000000:
         print(f"starting {i} game")
         play_gomoku()
         if games_played == 100:

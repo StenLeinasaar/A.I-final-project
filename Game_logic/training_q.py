@@ -5,8 +5,8 @@ sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
 from q_learning import QLearning
 import traceback
 
-PLTYP1 = 'sarsa'
-PLTYP2 = 'sarsa'
+PLTYP1 = 'q-learning'
+PLTYP2 = 'q-learning'
 
 q_player_two = QLearning()
 q_player_one = QLearning()
@@ -29,15 +29,14 @@ def play_gomoku():
     while True: 
         while theWinner == 0:
             # players play in turn
-            if current_player == PLAYER2 and PLTYP2 == 'sarsa':
+            if current_player == PLAYER2 and PLTYP2 == 'q-learning':
                 row, col = q_player_two.get_move(gomoku_board, current_player)
-            elif current_player == PLAYER1 and PLTYP1=='sarsa':
+            elif current_player == PLAYER1 and PLTYP1=='q-learning':
                 row, col = q_player_one.get_move(gomoku_board, current_player)
                 
             # check winner
             theWinner = gomoku_board.is_win(current_player)
             gomoku_board.play(current_player, (row,col))
- 
             # Change the player
             if current_player == PLAYER1:
                 current_player = PLAYER2
@@ -93,10 +92,10 @@ def print_weights():
 def main():
     games_played = 0
     i = 0
-    while i < 30000:
+    while i < 1000000:
         print(f"starting {i} game")
         play_gomoku()
-        if games_played == 2:
+        if games_played == 100:
             print_weights()
             games_played = 0
         
