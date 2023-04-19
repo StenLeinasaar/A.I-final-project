@@ -70,7 +70,6 @@ def alpha_beta_pruning(game_board:Board, player:int):
     else:
         # min player
         for move in available_moves:
-            print("min player")
             # print(f"checking min player with the move {move}")
             game_board.play(player,move)
             # print("made a move, printing a game board")
@@ -81,8 +80,8 @@ def alpha_beta_pruning(game_board:Board, player:int):
                 best_move = move
             game_board.undo(move)
 
-    print(f"the min value is {min_value}")
-    print(f"the move chosen is {best_move}")
+    # print(f"the min value is {min_value}")
+    # print(f"the move chosen is {best_move}")
     
     return best_move
 
