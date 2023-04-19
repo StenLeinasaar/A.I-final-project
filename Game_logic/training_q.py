@@ -8,8 +8,8 @@ from q_learning import QLearning
 PLTYP1 = 'q-learning'
 PLTYP2 = 'q-learning'
 
-q_player_two = QLearning()
-q_player_one = QLearning()
+q_player_two = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=[18, -18, -0.25, 14.625, -0.25, -0.25, -0.25, -0.25, -0.25, 0.625])
+q_player_one = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, 18, -0.25, -0.25, -18, 0.625, 0.625])
 
 PLAYER1 = 1
 PLAYER2 = 2
@@ -67,7 +67,7 @@ def play_gomoku():
 def print_weights():
     file_number = 0
     # prints the weights to the file
-    filename = f"q_weights_{file_number}"
+    filename = f"q_weights_alpha03_{file_number}"
     print("file about to be written", filename)
     if os.path.exists(f"Game_logic/{filename}"):
         file_stat = os.stat(filename)

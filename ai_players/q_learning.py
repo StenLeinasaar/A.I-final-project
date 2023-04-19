@@ -15,8 +15,8 @@ import os
 
 
 class QLearning:
-    def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15):
-        self.weights = [-19.75, 19.75, -19.75, 19.75, -19.75, 19.75,-19.75, 19.75, 19.75,0]
+    def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, 18, -0.25, -0.25, -18, 0.625, 0.625]):
+        self.weights = weights
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma

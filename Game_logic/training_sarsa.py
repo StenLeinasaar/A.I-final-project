@@ -8,8 +8,8 @@ from sarsa_agent import SarsaAgent
 PLTYP1 = 'sarsa'
 PLTYP2 = 'sarsa'
 
-sarsa_player_two = SarsaAgent()
-sarsa_player_one = SarsaAgent()
+sarsa_player_two = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=[18, 18, -0.25, 0.0, -0.25, -0.25, 18, -0.25, -0.25, -0.25] )
+sarsa_player_one = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -18, -0.25] )
 
 PLAYER1 = 1
 PLAYER2 = 2
@@ -63,7 +63,7 @@ def play_gomoku():
 def print_weights():
     file_number = 0
     # prints the weights to the file
-    filename = f"sarsa_weights_{file_number}"
+    filename = f"sarsa_weights_alpha02_{file_number}"
     print("file about to be written", filename)
     if os.path.exists(f"Game_logic/{filename}"):
         file_stat = os.stat(filename)
