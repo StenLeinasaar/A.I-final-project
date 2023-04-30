@@ -11,7 +11,7 @@ from q_learning import QLearning
 pygame.init()
 
 PLTYP1 = 'human'
-PLTYP2 = 'human'
+PLTYP2 = 'q-learning'
 
 sarsa_player_two = SarsaAgent()
 sarsa_player_one = SarsaAgent()

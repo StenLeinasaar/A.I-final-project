@@ -7,11 +7,10 @@ MAX = 99999999
 
 
 def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, move) -> int:
-    # print(f"max val called with depth {depth}")
-    if depth == 0: #or game_board.get_state() in [0,-1,1]: # or (node is either draw, lose or win.
-        return evaluate(game_board, player,True) #evaluate_point(game_board, move)
+    if depth == 0: 
+        return evaluate(game_board, player,True)
     best_value = -float("inf")
-    moves = game_board.get_possible_moves() #NEED a function to get all possible moves
+    moves = game_board.get_possible_moves()
     for move in moves:
         game_board.play(player, move)
         value = min_val(game_board, depth-1, alpha, beta, player, move)
@@ -26,9 +25,7 @@ def max_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, mov
 
 
 def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, move) -> int:
-    # print(f"Min val function called, depth is {depth}")
-    if depth == 0: #or game_board.get_state() in [0,-1,1]: # or (node is either draw, lose or win.
-        # print("returning evaluate score to main function")
+    if depth == 0:
         return evaluate(game_board, player, False)
     best_value = float("inf")
     moves = game_board.get_possible_moves()
@@ -45,12 +42,9 @@ def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, mov
 # driver function
 def alpha_beta_pruning(game_board:Board, player:int):
     depth = 2
-    # print(f"calling the functions with value of depth being = {depth}")
     alpha = -float("inf")
     beta = float("inf")
-    #get all possible moves
     available_moves = game_board.get_possible_moves()
-    # print(f"these are available moves {available_moves}")
     max_value = 0
     min_value = 1500000
     try:
@@ -70,18 +64,12 @@ def alpha_beta_pruning(game_board:Board, player:int):
     else:
         # min player
         for move in available_moves:
-            # print(f"checking min player with the move {move}")
             game_board.play(player,move)
-            # print("made a move, printing a game board")
-            # print(f'calling a min player, depth is {depth}')
             value = min_val(game_board, depth, alpha, beta, player, move)
             if value < min_value:
                 min_value = value
                 best_move = move
             game_board.undo(move)
-
-    # print(f"the min value is {min_value}")
-    # print(f"the move chosen is {best_move}")
     
     return best_move
 
@@ -146,7 +134,6 @@ def evaluate(game_board: Board, player:int, max_player):
                         open_threes += 1
                     elif count == 2:
                         open_twos += 1
-    print(f"Score currently is {score}")
     # print(f"Returning the score of  {score}")
     if max_player:
         # Sbutract based on open rows, columns, and diagonals
@@ -154,46 +141,10 @@ def evaluate(game_board: Board, player:int, max_player):
     else:
         score += 1000 * open_fours + 100 * open_threes + 10*open_twos
     
-    print(f"Score after punishing is {score}")
 
     return score
 
 
 
-
-
-
-
-
-
-
-
-# def max_val(node: Node, depth: int, alpha: int, beta: int) -> int:
-#     if depth == 0 or node.state in [0,-1,1]: # or (node is either draw, lose or win.
-#         return evaluate(node)
-#     best_value = -float("inf")
-#     for child in node.children:
-#         value = max_val(child, depth-1, alpha, beta)
-#         best_value = max(best_value, value)
-#         alpha = max(alpha, best_value)
-#         if beta <= alpha:
-#             break
-#     return best_value
-
-
-
-
-# def min_val(node: Node, depth: int, alpha: int, beta: int) -> int:
-#     if depth == 0 or node.state in [0,-1,1]: # or (node is either draw, lose or win.
-#         return evaluate(node)
-
-#     best_value = float("inf")
-#     for child in node.children:
-#         value = min_val(child, depth-1, alpha, beta)
-#         best_value = min(best_value, value)
-#         beta = min(beta, best_value)
-#         if beta <= alpha:
-#             break
-#     return best_value
 
 
