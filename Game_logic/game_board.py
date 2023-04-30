@@ -94,29 +94,12 @@ class Board:
         return count
     
     def get_possible_moves(self):
-        """
-        Takes a gomoku board as input and returns a list of tuples representing all open moves.
-
-        The board is represented as a list of lists, where 0 represents an empty space, 1 represents a black stone,
-        and -1 represents a white stone.
-
-        Each tuple in the returned list represents a coordinate (row, column) of an empty space on the board.
-        """
-        # open_moves = []
-        # size = self.size
-
-        # for row in range(size):
-        #     for col in range(size):
-        #         if self.grid[row][col] == 0:
-        #             open_moves.append((row, col))
-
-        # return open_moves
-
+       
         nearby_moves = []
         for i in range(self.size):
             for j in range(self.size):
-                if self.grid[i][j] == 0:  # Check if cell is empty
-                    for dx, dy in [(0, 1), (0, -1), (1, 0), (1, -1), (-1,1), (1,1), (-1,-1), (-1,0)]:  # Check adjacent cells in four directions
+                if self.grid[i][j] == 0: 
+                    for dx, dy in [(0, 1), (0, -1), (1, 0), (1, -1), (-1,1), (1,1), (-1,-1), (-1,0)]: 
                         x, y = i + dx, j + dy
                         if x >= 0 and x < self.size and y >= 0 and y < len(self.grid[x]) and self.grid[x][y] != 0:
                             nearby_moves.append((i, j))
@@ -136,7 +119,6 @@ class Board:
             return 0
     
 
-    
     def print_board(self):
         for bdraw in self.grid:
             print(bdraw)

@@ -1,40 +1,7 @@
 import numpy as np
-import math
-import sys
 from random import randint
 from game_board import Board
 import os
-
-
-
-
-'''
-
-Pseudocode and higher lever understanding
-
-
-initilize the Q values  ---> Weights right? 
-
-for each episode
-    initilize state
-
-    choose action based on current policy
-
-    for each step in the episode:
-        take action a 
-        observe a new state S'
-        get an immediate reward
-
-        choose next action a' based on Q values
-
-    
-    update weights
-
-    state = new state
-
-    action = new action
-
-'''
 
 
 class SarsaAgent:
@@ -59,18 +26,11 @@ class SarsaAgent:
         else:
             q_values = {}
             for move in moves:
-                '''
-                Should be a tuple of x and y coordinate. It will be in dictionary with its value
-                '''
-                # Make the move
                 board.play(player, move)
                 q_values[move] = np.dot(self.weights, self.feature_vector(board, player) )
-                # Undo the move
                 board.undo(move)
 
-                
-            # print(f"sending a move {max(q_values)}")
-            return max(q_values)#key=q_values.get)  == send the move back
+            return max(q_values)
 
 #     #  Function for updating weights: 
 #     '''
@@ -82,35 +42,25 @@ class SarsaAgent:
 #     '''
     def update_weights(self, state, next_state, player):
 
-        
-
-        # print(f"weights before updating {self.weights}")
-
         new_weights = self.alpha * (self.gamma * (self.weights * self.feature_vector(next_state, player)) - (self.weights * self.feature_vector(state, player)) * self.feature_vector(state, player))
-        # print(f"the new weights are {new_weights}")
         for i, weight in enumerate(self.weights):
             self.weights[i] = weight +  new_weights[i]
             if self.weights[i] >= 20:
                 self.weights[i] = 18
             elif self.weights[i] <= -20:
                 self.weights[i] = -18
-        # print(f"updated weights are {self.weights}")
 
     def update_weights_reward(self, state, next_state, reward,player):
-        # print(f"weights before updating {self.weights}")
 
         new_weights = self.alpha * (reward + self.gamma * (self.weights * self.feature_vector(next_state, player)) - (self.weights * self.feature_vector(state, player)) * self.feature_vector(state, player))
-        # print(f"the new weights are {new_weights}")
         for i, weight in enumerate(self.weights):
             self.weights[i] = weight +  new_weights[i]
             if self.weights[i] >= 20:
                 self.weights[i] = 18
             elif self.weights[i] <= -20:
                 self.weights[i] = -18
-        # print(f"updated weights are {self.weights}")
 
     def feature_vector(self, board:Board, player):
-        # print("I am making a feature vector")
         opponent = 3 - player
 
        
@@ -244,35 +194,13 @@ class SarsaAgent:
 
         self.previous_state = self.current_state
         self.previous_action = self.current_action
-        # print(f"sending a move {self.current_action} ")
         return self.current_action
     
     def game_over(self, board:Board, player:int):
 
         reward = self.alpha * (board.get_reward(player))
         self.update_weights_reward(self.previous_state, self.current_state, reward, player)
-        # update weight based on reward. Question...
 
-    def exit_print(self, player_info1, player_info2):
-        file_number = 0
-        # prints the weights to the file
-        filename = f"weights_{file_number}"
-        print("file about to be written", filename)
-        if os.path.exists(f"Game_logic/{filename}"):
-            file_stat = os.stat(filename)
-            if file_stat.st_size() > 100000000:
-                file_number += 1
-                filename = f"weights_{file_number}"
-               
-          
-        with open(filename, 'a') as file:
-            file.write(str(self.weights))
-            file.write("  ")
-            file.write(f"Player1 score: {player_info1.get('score')}")
-            file.write("  ")
-            file.write(f"Player2 score: {player_info2.get('score')}")
-            file.write("\n")
-            
 
 
 
