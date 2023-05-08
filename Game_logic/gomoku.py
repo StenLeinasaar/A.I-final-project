@@ -13,10 +13,11 @@ pygame.init()
 PLTYP1 = 'human'
 PLTYP2 = 'q-learning'
 
-sarsa_player_two = SarsaAgent()
-sarsa_player_one = SarsaAgent()
-q_player_one = QLearning()
-q_player_two = QLearning()
+sarsa_player_one = SarsaAgent(weights=[-18, -18, 0.38326323200000023, -0.6448000000000005, -18, -18, 18, 18, -0.03990640383383198, -0.20010044800514182])
+sarsa_player_two = SarsaAgent(weights=[18, -18, -2.156316160000002, 2.120000000000001, -18, -18, 18, -18, -4.1794220451862873e-05, -0.4332209069536925])
+
+q_player_one = QLearning(weights=[18, -18, 18, 18, -18, 18, -18, 18, 0.07980480000000104, -0.2519999934689009] )
+q_player_two = QLearning(weights=[18, -18, 18, -6.044169600000005, -18, -18, -18, -18, -0.036000236644109146, -0.19529999996772648])
 
 white = (255,255,255)
 black = (0,0,0)
