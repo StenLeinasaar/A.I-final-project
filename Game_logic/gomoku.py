@@ -10,7 +10,7 @@ from q_learning import QLearning
 
 pygame.init()
 
-PLTYP1 = 'human'
+PLTYP1 = 'sarsa'
 PLTYP2 = 'q-learning'
 
 sarsa_player_one = SarsaAgent(weights=[-18, -18, 0.38326323200000023, -0.6448000000000005, -18, -18, 18, 18, -0.03990640383383198, -0.20010044800514182])

@@ -41,7 +41,7 @@ def min_val(game_board:Board, depth: int, alpha: int, beta: int, player:int, mov
 
 # driver function
 def alpha_beta_pruning(game_board:Board, player:int):
-    depth = 2
+    depth = 3
     alpha = -float("inf")
     beta = float("inf")
     available_moves = game_board.get_possible_moves()
