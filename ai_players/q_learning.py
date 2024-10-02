@@ -82,7 +82,7 @@ class QLearning:
             for j in range(self.size):
 
 
-                # Empty cells
+                # Feature: Empty cells
                 # if the cell is empty, append a 0 to the feature vector
                 if board.grid[i][j] == 0:
                     features[0] += 1
@@ -99,8 +99,9 @@ class QLearning:
                     for k in range(3, -1,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if (x >= 0 and x < self.size) and (y >= 0 and y < self.size) and (board.grid[x][y] == opponent):
+                        if ((x >= 0) and (x < self.size)) and ((y >= 0) and (y < self.size)) and (board.grid[x][y] == opponent):
                             count += 1
+                    #after the for loop check the count value
                     if count == 4:
                         features[2] -= 1
             
@@ -113,8 +114,9 @@ class QLearning:
                     for k in range(3, -1,-1):
                         x = i + k*dx
                         y = j + k*dy
-                        if x >= 0 and x < self.size and y >= 0 and y < self.size and board.grid[x][y] == player:
+                        if ((x >= 0) and (x < self.size)) and ((y >= 0) and (y < self.size)) and (board.grid[x][y] == player):
                             count += 1
+                    #after the for loop check the count value
                     if count == 4:
                         features[3] += 1
 

@@ -2,7 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 from game_board import Board
-sys.path.append("/Users/stenleinasaar/Desktop/A.I final project/ai_players")
+sys.path.append("/Users/stenleinasaar/Desktop/A.I-final-project/ai_players")
 from alpha_beta_pruning import alpha_beta_pruning
 from sarsa_agent import SarsaAgent
 import os
@@ -10,7 +10,7 @@ from q_learning import QLearning
 
 pygame.init()
 
-PLTYP1 = 'sarsa'
+PLTYP1 = 'human'
 PLTYP2 = 'q-learning'
 
 sarsa_player_one = SarsaAgent(weights=[-18, -18, 0.38326323200000023, -0.6448000000000005, -18, -18, 18, 18, -0.03990640383383198, -0.20010044800514182])
@@ -118,9 +118,6 @@ def check_next():
         elif event.type == KEYDOWN:
             print("key down was pressed")
             continue
-
-        # print(f"event key is  {event.key}")
-        # print(f"event type is {event.type}" )
         return event.key
     return None
 
