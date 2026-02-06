@@ -13,7 +13,12 @@ GUI of a game was not neccesary, but I decided to create it anyways using PyGame
 
 To run the code simply start virtualenvironment: virtualenv venv  --> and then --> source venv/bin/activate
 Download the dependcies and required packages:  pip3 install -r requirements.txt
-Then start the code: python3 gomoku.py 
+Then start the code: python3 gomoku.py
+
+You can also configure player types when launching the game:
+- Human vs Human: `python3 gomoku.py --player1 human --player2 human`
+- Human vs A.I: `python3 gomoku.py --player1 human --player2 q-learning`
+- A.I vs A.I: `python3 gomoku.py --player1 sarsa --player2 q-learning`
 
 ### Utility folder 
 

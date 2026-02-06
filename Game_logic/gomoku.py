@@ -1,17 +1,41 @@
+import argparse
+import os
 import pygame
 import sys
 from pygame.locals import *
 from game_board import Board
-sys.path.append("/Users/stenleinasaar/Desktop/A.I-final-project/ai_players")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ai_players")))
 from alpha_beta_pruning import alpha_beta_pruning
 from sarsa_agent import SarsaAgent
-import os
 from q_learning import QLearning
 
 pygame.init()
 
-PLTYP1 = 'human'
-PLTYP2 = 'q-learning'
+def parse_player_types():
+    parser = argparse.ArgumentParser(description="Run Gomoku with configurable player types.")
+    parser.add_argument(
+        "--player1",
+        "--p1",
+        dest="player1",
+        default="human",
+        choices=["human", "q-learning", "sarsa", "alpha-beta", "ai"],
+        help="Player 1 type (human, q-learning, sarsa, alpha-beta, ai).",
+    )
+    parser.add_argument(
+        "--player2",
+        "--p2",
+        dest="player2",
+        default="q-learning",
+        choices=["human", "q-learning", "sarsa", "alpha-beta", "ai"],
+        help="Player 2 type (human, q-learning, sarsa, alpha-beta, ai).",
+    )
+    args, _ = parser.parse_known_args()
+    def normalize(value):
+        return "q-learning" if value == "ai" else value
+    return normalize(args.player1), normalize(args.player2)
+
+
+PLTYP1, PLTYP2 = parse_player_types()
 
 sarsa_player_one = SarsaAgent(weights=[-18, -18, 0.38326323200000023, -0.6448000000000005, -18, -18, 18, 18, -0.03990640383383198, -0.20010044800514182])
 sarsa_player_two = SarsaAgent(weights=[18, -18, -2.156316160000002, 2.120000000000001, -18, -18, 18, -18, -4.1794220451862873e-05, -0.4332209069536925])

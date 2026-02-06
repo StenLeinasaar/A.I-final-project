@@ -51,14 +51,14 @@ def play_gomoku():
         # gomoku_board.print_board()
         if theWinner == PLAYER1:
             player_one_score += 1
-            sarsa_player_one.game_over(gomoku_board, current_player)
-            q_player_two.game_over(gomoku_board, current_player)
+            sarsa_player_one.game_over(gomoku_board, PLAYER1)
+            q_player_two.game_over(gomoku_board, PLAYER2)
             break
 
         else:
             player_two_score += 1
-            sarsa_player_one.game_over(gomoku_board, current_player)
-            q_player_two.game_over(gomoku_board, current_player)
+            sarsa_player_one.game_over(gomoku_board, PLAYER1)
+            q_player_two.game_over(gomoku_board, PLAYER2)
             break
     return theWinner
 

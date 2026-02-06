@@ -1,5 +1,4 @@
 import re
-import numpy as np
 class Board:
     def __init__(self, size=15):
         self.size = size
@@ -105,18 +104,35 @@ class Board:
                             nearby_moves.append((i, j))
                             break
         return nearby_moves
+
+    def count_immediate_wins(self, player):
+        moves = self.get_possible_moves()
+        if not moves:
+            moves = [
+                (row, col)
+                for row in range(self.size)
+                for col in range(self.size)
+                if self.grid[row][col] == 0
+            ]
+        wins = 0
+        for move in moves:
+            self.play(player, move)
+            if self.is_win(player):
+                wins += 1
+            self.undo(move)
+        return wins
     
 
     def get_reward(self, player):
         opponent = 3- player
         if self.is_win(player):
-            return 1
+            return 1.0
         elif self.is_win(opponent):
-            return -1
-        elif np.count_nonzero(self.grid == 0) == 0:
-            return 0.5
-        else:
-            return 0
+            return -1.0
+        elif all(cell != 0 for row in self.grid for cell in row):
+            return 0.0
+        immediate_delta = self.count_immediate_wins(player) - self.count_immediate_wins(opponent)
+        return 0.01 * immediate_delta
     
 
     def print_board(self):
