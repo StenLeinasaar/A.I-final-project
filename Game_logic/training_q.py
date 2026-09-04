@@ -18,8 +18,10 @@ except ImportError:
 PLTYP1 = 'q-learning'
 PLTYP2 = 'q-learning'
 
-q_player_two = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=[18, -18, -0.25, 14.625, -0.25, -0.25, -0.25, -0.25, -0.25, 0.625])
-q_player_one = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, 18, -0.25, -0.25, -18, 0.625, 0.625])
+from feature_utils import DEFAULT_WEIGHTS
+
+q_player_two = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=list(DEFAULT_WEIGHTS))
+q_player_one = QLearning(epsilon=0.2, alpha=0.3, gamma=1, size=15, weights=list(DEFAULT_WEIGHTS))
 
 PLAYER1 = 1
 PLAYER2 = 2
@@ -41,8 +43,8 @@ stats = {
 }
 
 # Store initial weights for tracking changes
-initial_weights_p1 = q_player_one.weights.copy()
-initial_weights_p2 = q_player_two.weights.copy()
+initial_weights_p1 = list(q_player_one.weights)
+initial_weights_p2 = list(q_player_two.weights)
 
 
 def display_board(board, last_move=None, current_player=None):
