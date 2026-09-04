@@ -18,8 +18,10 @@ except ImportError:
 PLTYP1 = 'sarsa'
 PLTYP2 = 'sarsa'
 
-sarsa_player_two = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=[18, 18, -0.25, 0.0, -0.25, -0.25, 18, -0.25, -0.25, -0.25] )
-sarsa_player_one = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -0.25, -18, -0.25] )
+from feature_utils import DEFAULT_WEIGHTS
+
+sarsa_player_two = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=list(DEFAULT_WEIGHTS))
+sarsa_player_one = SarsaAgent(epsilon=0.1, alpha=0.2, gamma=1, size=15, weights=list(DEFAULT_WEIGHTS))
 
 PLAYER1 = 1
 PLAYER2 = 2
@@ -41,8 +43,8 @@ stats = {
 }
 
 # Store initial weights for tracking changes
-initial_weights_p1 = sarsa_player_one.weights.copy()
-initial_weights_p2 = sarsa_player_two.weights.copy()
+initial_weights_p1 = list(sarsa_player_one.weights)
+initial_weights_p2 = list(sarsa_player_two.weights)
 
 
 def display_board(board, last_move=None, current_player=None):

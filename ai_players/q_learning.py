@@ -1,13 +1,27 @@
 import numpy as np
 from random import randint
 from game_board import Board
-from feature_utils import compute_features
-
+from feature_utils import compute_features, DEFAULT_WEIGHTS, FEATURE_DIM
 
 
 class QLearning:
-    def __init__(self, epsilon=0.4, alpha=0.5, gamma=1, size=15, weights=[-18, -0.25, -0.25, -0.25, 18, -0.25, -0.25, -18, 0.625, 0.625]):
-        self.weights = weights
+    def __init__(
+        self,
+        epsilon=0.4,
+        alpha=0.5,
+        gamma=1,
+        size=15,
+        weights=None,
+    ):
+        if weights is None:
+            weights = list(DEFAULT_WEIGHTS)
+        if len(weights) != FEATURE_DIM:
+            raise ValueError(
+                f"QLearning weights must have length {FEATURE_DIM} "
+                f"(got {len(weights)}). Old weight files are incompatible "
+                f"with the redesigned Gomoku feature vector — retrain from scratch."
+            )
+        self.weights = np.array(weights, dtype=float)
         self.epsilon = epsilon
         self.alpha = alpha
         self.gamma = gamma
@@ -17,31 +31,20 @@ class QLearning:
         self.previous_action = None
         self.current_action = None
 
-    
-    def choose_action(self, board:Board, player):
+    def choose_action(self, board: Board, player):
         moves = board.get_possible_moves()
         if len(moves) == 0:
             return (self.size // 2, self.size // 2)
         if np.random.uniform() < self.epsilon:
             return moves[randint(0, len(moves) - 1)]
         return self._best_move(board, player)
-        
-    def choose_action_max(self, board:Board, player):
+
+    def choose_action_max(self, board: Board, player):
         moves = board.get_possible_moves()
         if len(moves) == 0:
             return (self.size // 2, self.size // 2)
         return self._best_move(board, player)
 
-
-
-    #     #  Function for updating weights: 
-#     '''
-
-#     for each weight in weights: 
-    
-#         weight  = weight + alpha(gamma + gamma(weight_old * feature_vector(new_State, new_Action) - weight * feature_vectore(state, action))) * feature(state, action) 
-    
-#     '''
     def update_weights(self, state, action, next_state, player):
         if state is None or action is None:
             return
@@ -62,11 +65,7 @@ class QLearning:
         self._clip_weights()
 
     def _clip_weights(self):
-        for i, weight in enumerate(self.weights):
-            if weight >= 20:
-                self.weights[i] = 18
-            elif weight <= -20:
-                self.weights[i] = -18
+        self.weights = np.clip(self.weights, -100.0, 100.0)
 
     def _features_for_move(self, board, player, move):
         board.play(player, move)
@@ -96,31 +95,23 @@ class QLearning:
             if best_value is None or q_value > best_value:
                 best_value = q_value
         return float(best_value)
-            
-    def get_move(self, board:Board, player):
 
+    def get_move(self, board: Board, player):
         self.current_state = board
-
         self.current_action = self.choose_action(board, player)
 
         if self.previous_state is not None:
-            self.update_weights(self.previous_state, self.previous_action, self.current_state, player)
+            self.update_weights(
+                self.previous_state, self.previous_action, self.current_state, player
+            )
         self.previous_state = self.current_state
         self.previous_action = self.current_action
         return self.current_action
-    
-    def game_over(self, board:Board, player:int):
 
+    def game_over(self, board: Board, player: int):
         reward = board.get_reward(player)
-        self.update_weights_reward(self.previous_state, self.previous_action, reward, player)
+        self.update_weights_reward(
+            self.previous_state, self.previous_action, reward, player
+        )
         self.previous_state = None
         self.previous_action = None
-            
-
-
-
-
-
- 
-    
-      
