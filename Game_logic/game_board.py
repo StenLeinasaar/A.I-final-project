@@ -124,15 +124,16 @@ class Board:
     
 
     def get_reward(self, player):
-        opponent = 3- player
+        """Terminal learning signal only: win +1, loss -1, draw 0; else 0."""
+        opponent = 3 - player
         if self.is_win(player):
             return 1.0
-        elif self.is_win(opponent):
+        if self.is_win(opponent):
             return -1.0
-        elif all(cell != 0 for row in self.grid for cell in row):
+        if all(cell != 0 for row in self.grid for cell in row):
             return 0.0
-        immediate_delta = self.count_immediate_wins(player) - self.count_immediate_wins(opponent)
-        return 0.01 * immediate_delta
+        # No mid-game shaping — avoid noisy 0.01 * immediate_delta
+        return 0.0
     
 
     def print_board(self):

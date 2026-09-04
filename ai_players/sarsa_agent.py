@@ -19,7 +19,7 @@ class SarsaAgent:
             raise ValueError(
                 f"SarsaAgent weights must have length {FEATURE_DIM} "
                 f"(got {len(weights)}). Old weight files are incompatible "
-                f"with the redesigned Gomoku feature vector — retrain from scratch."
+                f"with the redesigned Gomoku feature vector \u2014 retrain from scratch."
             )
         self.weights = np.array(weights, dtype=float)
         self.epsilon = epsilon
@@ -64,7 +64,7 @@ class SarsaAgent:
         self._clip_weights()
 
     def _clip_weights(self):
-        self.weights = np.clip(self.weights, -100.0, 100.0)
+        self.weights = np.clip(self.weights, -200.0, 200.0)
 
     def _features_for_move(self, board, player, move):
         board.play(player, move)
