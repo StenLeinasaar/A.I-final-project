@@ -1,2 +1,17 @@
 /.DS_Store
-__pycache__
+__pycache__/
+**/__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Training artifacts (keep weights/README.md and .gitkeep)
+Game_logic/weights/*.json
+Game_logic/weights/history/
+*.png
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
